@@ -11,12 +11,12 @@ func _ready():
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+# for updating UI stuff (counters etc)
 func _process(delta):
 	pass
 
 
-# Will use it to calculate in-game stuff
+# for updating game logic stuff (production etc)
 func _physics_process(delta):
 	pass
 
