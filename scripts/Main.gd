@@ -18,6 +18,11 @@ func _process(delta):
 
 # for updating game logic stuff (production etc)
 func _physics_process(delta):
+	for b in Game.businesses:
+		if b["count"] > 0:
+			var produced : float = b["count"] * b["production"] * delta;
+			Game.counter += produced;
+			b["production_all_time"] += produced;
 	pass
 
 
