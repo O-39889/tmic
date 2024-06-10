@@ -1,0 +1,18 @@
+[
+	{
+		"name": "cooler_bag",
+		"full_name": "Cooler Bag",
+		"description": "Portable storage to carry around and sell more ice cream. Thermal insulation allows to keep it cool for some time.",
+		"initial_price": 20,
+		"multiplier": 1.1,
+		"initial_production": 0.25,
+	},
+	{
+		"name": "cart",
+		"full_name": "Ice Cream Cart",
+		"description": "A nice ice cream cart to sell more ice cream.",
+		"initial_price": 250,
+		"multiplier": 1.15,
+		"initial_production": 2.5,
+	},
+]
