@@ -36,8 +36,10 @@ class Business:
 		production = entry["initial_production"];
 		production_all_time = 0;
 	
-	func basic_production_rate(delta: float):
-		return production * count * delta;
+	func produce(delta: float) -> float: 
+		var produced : float = production * count * delta;
+		production_all_time += produced;
+		return produced;
 
 
 func click():

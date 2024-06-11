@@ -25,7 +25,6 @@ func _process(delta):
 func _physics_process(delta):
 	for b in Game.businesses:
 		if b.count > 0:
-			var produced : float = b.basic_production_rate(delta);
+			var produced : float = b.produce(delta);
 			Game.counter += produced;
-			b.production_all_time += produced;
 	pass
