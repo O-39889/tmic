@@ -1,11 +1,13 @@
 extends Node
 
-
 # can't make this const sadge
 @onready var BUSINESSES_INFO : Array = ResourceLoader.load("res://data/businesses.json").data;
 
 var counter : float = 0;
 var businesses : Array;
+
+var click_production : float = 1;
+var clicks : int = 0;
 
 
 class Business:
@@ -36,6 +38,11 @@ class Business:
 	
 	func basic_production_rate(delta: float):
 		return production * count * delta;
+
+
+func click():
+	counter += click_production;
+	clicks += 1;
 
 
 # Called when the node enters the scene tree for the first time.
