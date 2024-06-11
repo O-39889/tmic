@@ -19,6 +19,7 @@ class Business:
 	var count: float;
 	var initial_production: float;
 	var production: float;
+	var production_all_time: float;
 	
 	func _init(_id: int, entry: Dictionary):
 		id = _id
@@ -31,6 +32,7 @@ class Business:
 		count = 0;
 		initial_production = entry["initial_production"];
 		production = entry["initial_production"];
+		production_all_time = 0;
 	
 	func basic_production_rate(delta: float):
 		return production * count * delta;
