@@ -1,6 +1,6 @@
 extends Node
 
-
+# premature optimisation speedrun any%
 const LOG_1000 : float = log(1000);
 
 @onready var number_names : PackedStringArray = get_number_names();

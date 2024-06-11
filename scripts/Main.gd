@@ -1,7 +1,6 @@
 extends Control
 
-# premature optimisation speedrun any%
-const LOG_1000 : float = log(1000);
+
 const COUNTER_UPDATE_FASTEST : float = 1 / 15;
 const COUNTER_UPDATE_FRAMERULE : float = 0.35; # hehe
 const COUNTER_UPDATE_SLOW : float = 0.7;
@@ -19,10 +18,6 @@ func _ready():
 
 # for updating UI stuff (counters etc)
 func _process(delta):
-	fastest_tick += delta;
-	if fastest_tick >= COUNTER_UPDATE_FASTEST:
-		$TestLbl.text = Globals.format_num(Game.counter);
-		fastest_tick = 0;
 	pass
 
 
