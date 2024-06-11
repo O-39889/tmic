@@ -7,6 +7,18 @@ extends Node
 var counter : float = 0;
 var businesses : Array;
 
+
+class Business:
+	var id: int;
+	var short_name: String;
+	var full_name: String;
+	var description: String;
+	var initial_price: float;
+	var price: float = initial_price;
+	var multiplier: float;
+	var initial_production: float;
+	var production: float = initial_production;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Game autoload loaded");
