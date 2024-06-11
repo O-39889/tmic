@@ -14,21 +14,31 @@ class Business:
 	var full_name: String;
 	var description: String;
 	var initial_price: float;
-	var price: float = initial_price;
+	var price: float;
 	var multiplier: float;
+	var count: float;
 	var initial_production: float;
-	var production: float = initial_production;
+	var production: float;
+	
+	func _init(_id: int, entry: Dictionary):
+		id = _id
+		short_name = entry["name"];
+		full_name = entry["full_name"];
+		description = entry["description"];
+		initial_price = entry["initial_price"];
+		price = entry["initial_price"];
+		multiplier = entry["multiplier"];
+		count = 0;
+		initial_production = entry["initial_production"];
+		production = entry["initial_production"];
+	
+	func basic_production_rate(delta: float):
+		return production * count * delta;
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Game autoload loaded");
-	for b:Dictionary in BUSINESSES_INFO:
-		var b_copy := b.duplicate(true);
-		b_copy.merge({
-			"price": b["initial_price"],
-			"production": b["initial_production"],
-			"count": 0,
-			"production_all_time": 0,
-		});
-		businesses.append(b_copy);
-	pass # Replace with function body.
+	for i in range(BUSINESSES_INFO.size()):
+		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
+		businesses.append(b);
