@@ -6,8 +6,10 @@ extends Node
 var counter : float = 0;
 var businesses : Array;
 
-var click_production : float = 1;
+var base_click_production : float = 1;
 var clicks : int = 0;
+
+var multipliers := {};
 
 
 class Business:
@@ -41,6 +43,18 @@ class Business:
 
 
 func get_click_production():
+	var click_production := base_click_production;
+	# let's imagine that we have synergy techs/upgrades
+	# that boost our base clicking production per every purchased business
+	if multipliers.has("clicking_synergies"):
+		for short_name in multipliers["clicking_synergies"]:
+			if businesses[short_name].count > 0:
+				# let's imagine that, for each synergy,
+				# base clicking production increases
+				# by 0.1 for every N^3 businesses owned
+				# (where N is the ordinal number of the business
+				# type) but I'm not exactly sure
+				click_production += 0.1 * (businesses[short_name].count / pow(businesses[short_name].id + 1, 3));
 	return click_production;
 
 
