@@ -9,7 +9,9 @@ var businesses : Array;
 var base_click_production : float = 1;
 var clicks : int = 0;
 
-var multipliers := {};
+var multipliers := {
+	"flavours": 1.00,
+};
 
 
 class Business:

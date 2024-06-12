@@ -39,6 +39,7 @@ func _physics_process(delta):
 	for b in Game.businesses:
 		if b.count > 0:
 			var produced : float = b.base_produce(delta);
+			produced *= Game.multipliers["flavours"];
 			b.production_all_time += produced;
 			Game.counter += produced;
 	pass
