@@ -1,0 +1,26 @@
+[
+	{
+		"short_name": "vanilla",
+		"full_name": "Vanilla",
+		"description": "The starting option.\nA timeless classic.",
+		"price": 0,
+		"unlocked": 0,
+		"bonus": 1.0,
+	},
+	{
+		"short_name": "chocolate",
+		"full_name": "Chocolate",
+		"description": "Not everyone likes it, but it's still a strong contender for the most popular one.",
+		"price": 1500,
+		"unlocked": 1000,
+		"bonus": 0.01,
+	},
+	{
+		"short_name": "strawberry",
+		"full_name": "Strawberry",
+		"description": "Now with real strawberry pieces this time!",
+		"price": 3000,
+		"unlocked": 2000,
+		"bonus": 0.01,
+	},
+]
