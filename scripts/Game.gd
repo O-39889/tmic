@@ -2,6 +2,7 @@ extends Node
 
 # can't make this const sadge
 @onready var BUSINESSES_INFO : Array = ResourceLoader.load("res://data/businesses.json").data;
+@onready var FLAVOURS_INFO : Array = ResourceLoader.load("res://data/flavours.json").data;
 
 var counter : float = 0;
 var businesses : Array;
@@ -9,9 +10,9 @@ var businesses : Array;
 var base_click_production : float = 1;
 var clicks : int = 0;
 
-var multipliers := {
-	"flavours": 1.00,
-};
+var multipliers := {};
+
+var flavours := {};
 
 
 class Business:
@@ -44,6 +45,17 @@ class Business:
 		return production * count * delta;;
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	print("Game autoload loaded");
+	for i in range(BUSINESSES_INFO.size()):
+		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
+		businesses.append(b);
+	var vanilla_flavour : Dictionary = FLAVOURS_INFO[0];
+	flavours[vanilla_flavour["short_name"]] = vanilla_flavour;
+	multipliers["flavours"] = vanilla_flavour["bonus"];
+
+
 func get_click_production():
 	var click_production := base_click_production;
 	# let's imagine that we have synergy techs/upgrades
@@ -58,11 +70,3 @@ func get_click_production():
 				# type) but I'm not exactly sure
 				click_production += 0.1 * (businesses[short_name].count / pow(businesses[short_name].id + 1, 3));
 	return click_production;
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	print("Game autoload loaded");
-	for i in range(BUSINESSES_INFO.size()):
-		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
-		businesses.append(b);
