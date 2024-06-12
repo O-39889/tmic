@@ -11,8 +11,8 @@
 		"name": "cart",
 		"full_name": "Ice Cream Cart",
 		"description": "A nice ice cream cart to sell more ice cream.",
-		"initial_price": 250,
-		"multiplier": 1.15,
+		"initial_price": 100,
+		"multiplier": 1.125,
 		"initial_production": 2.5,
 	},
 ]
