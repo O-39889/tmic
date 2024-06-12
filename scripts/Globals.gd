@@ -10,28 +10,35 @@ func _ready():
 	print("Globals autoload loaded");
 
 
-func add_thousands_separator(num: int, sep: String = ',') -> String:
-	var s := str(num);
+func add_thousands_separator(num: float, sep: String = ',', decimals: int = 0) -> String:
+	var s := beautify(num, decimals);
+	# number less than 1000 won't need thousand seps
 	if num < 1000:
 		return s;
-	var len := s.length();
+	var split := s.split('.');
+	var len := split[0].length();
+	
 	for i in range(len - 3, 0, -3):
-		s = s.insert(i, sep);
-	return s;
+		split[0] = split[0].insert(i, sep);
+	if split.size() == 1:
+		return split[0];
+	else:
+		return split[0] + '.' + split[1];
 
 
-func beautify(num: float) -> String:
-	var s := "%.3f" % num;
+func beautify(num: float, decimals: int = 3) -> String:
+	var s := ("%." + str(decimals) + "f") % num;
 	return s.rstrip("0").rstrip(".");
 
 
-func format_num(num: float) -> String:
+# decimals is for non-integer values less than 1 million
+func format_num(num: float, decimals: int = 0) -> String:
 	if is_inf(num):
 		return "Infinity";
 	if is_nan(num):
 		return "NaN";
 	if absf(num) < 1_000_000:
-		return add_thousands_separator(int(num));
+		return add_thousands_separator(num, ',', decimals);
 	var log1000 := log(num) / LOG_1000;
 	var log_int := int(log1000);
 	var number_name := number_names[log_int - 2];
