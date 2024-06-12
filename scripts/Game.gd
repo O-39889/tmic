@@ -18,7 +18,7 @@ class Business:
 	var initial_price: float;
 	var price: float;
 	var multiplier: float;
-	var count: float;
+	var count: int;
 	var initial_production: float;
 	var production: float;
 	var production_all_time: float;
@@ -36,15 +36,12 @@ class Business:
 		production = entry["initial_production"];
 		production_all_time = 0;
 	
-	func produce(delta: float) -> float: 
-		var produced : float = production * count * delta;
-		production_all_time += produced;
-		return produced;
+	func base_produce(delta: float) -> float: 
+		return production * count * delta;;
 
 
-func click():
-	counter += click_production;
-	clicks += 1;
+func get_click_production():
+	return click_production;
 
 
 # Called when the node enters the scene tree for the first time.
