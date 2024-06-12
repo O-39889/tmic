@@ -55,8 +55,7 @@ func _on_business_purchased(short_name: String, amount: int):
 	print(b_node.business);
 	var current_price : float = b_node.business.price;
 	b_node.business.price = floorf(b_node.business.initial_price * pow(b_node.business.multiplier, b_node.business.count));
-	b_node.b_count.text = str(b_node.business.count);
-	b_node.b_price.text = Globals.format_num(b_node.business.price);
+	b_node.update();
 	var game_b;
 	for b in Game.businesses:
 		if b.short_name == short_name:

@@ -16,7 +16,11 @@ func _ready():
 		print("Error: business for business node " + str(self) + " is not set"); 
 		return;
 	b_name.text = str(business.full_name);
-	b_count.text = str(business.count)
+	update();
+
+
+func update():
+	b_count.text = str(business.count);
 	b_price.text = Globals.format_num(business.price);
 
 
