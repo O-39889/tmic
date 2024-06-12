@@ -8,8 +8,6 @@ const LOG_1000 : float = log(1000);
 
 func _ready():
 	print("Globals autoload loaded");
-	for x in [0.05, 10.10, 999999.01, 150000.14, 9e9 + 1e5]:
-		print(format_num(x));
 
 
 func add_thousands_separator(num: float, sep: String = ',', decimals: int = 0) -> String:
