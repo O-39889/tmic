@@ -58,7 +58,7 @@ func update_counter():
 
 
 func update_ips():
-	$PerSecLbl.text = Globals.format_num(Game.ips, 2);
+	$PerSecLbl.text = 'per second: ' + Globals.format_num(Game.ips, 2);
 
 
 func _on_business_purchased(short_name: String, amount: int):
