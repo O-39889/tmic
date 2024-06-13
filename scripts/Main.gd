@@ -31,22 +31,34 @@ func _process(delta):
 	if fastest_tick >= COUNTER_UPDATE_FASTEST:
 		fastest_tick = 0;
 		update_counter();
+		update_ips();
 	pass
 
 
 # for updating game logic stuff (production etc)
 func _physics_process(delta):
+	var ips : float = 0;
 	for b in Game.businesses:
 		if b.count > 0:
 			var produced : float = b.base_produce(delta);
+			
+			# and other multipliers as well
 			produced *= Game.multipliers["flavours"];
+			
 			b.production_all_time += produced;
+			ips += produced;
 			Game.counter += produced;
-	pass
+	ips /= delta;
+	Game.ips = ips;
+	update_ips();
 
 
 func update_counter():
 	$TestLbl.text = Globals.format_num(Game.counter);
+
+
+func update_ips():
+	$PerSecLbl.text = Globals.format_num(Game.ips, 2);
 
 
 func _on_business_purchased(short_name: String, amount: int):
