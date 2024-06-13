@@ -9,10 +9,18 @@
 	},
 	{
 		"name": "cart",
-		"full_name": "Ice Cream Cart",
-		"description": "A nice ice cream cart to sell more ice cream.",
+		"full_name": "Ice cream cart",
+		"description": "Even though its wheels actually don't even work, it still can add to the atmosphere of a wedding or any other celebration.",
 		"initial_price": 100,
 		"multiplier": 1.125,
 		"initial_production": 2.5,
 	},
+	{
+		"name": "van",
+		"full_name": "Ice cream van",
+		"description": "Bringing cold refreshing desserts and happiness to kids and adults alike!",
+		"initial_price": 600,
+		"multiplier": 1.12,
+		"initial_production": 35,
+	}
 ]
