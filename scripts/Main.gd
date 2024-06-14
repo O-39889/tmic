@@ -10,6 +10,7 @@ var fastest_tick : float = 0;
 @onready var FPS : int = Engine.physics_ticks_per_second;
 
 @onready var b_control := preload("res://scenes/Business.tscn");
+@onready var click_label := preload("res://scenes/FloatingLabel.tscn");
 
 @onready var businesses_list := find_child("BusinessesList");
 @onready var bank_counter := find_child("BankCounter")
@@ -79,5 +80,11 @@ func _on_business_purchased(short_name: String, amount: int):
 
 
 func _on_button_pressed():
-	Game.counter += Game.get_click_production();
+	var produced : float = Game.get_click_production();
+	Game.counter += produced;
 	update_counter();
+	var pos := get_viewport().get_mouse_position();
+	var label := click_label.instantiate();
+	label.text = Globals.format_num(produced);
+	label.position = pos - Vector2(0, 25);
+	add_child(label);

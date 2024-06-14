@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5jc1yllf46pf"]
+
+[ext_resource type="Script" path="res://scripts/FloatingLabel.gd" id="1_8y4mr"]
+
+[node name="FloatingLabel" type="Label"]
+text = "0"
+script = ExtResource("1_8y4mr")
