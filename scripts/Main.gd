@@ -11,16 +11,23 @@ var fastest_tick : float = 0;
 
 @onready var b_control := preload("res://scenes/Business.tscn");
 
+@onready var businesses_list := find_child("BusinessesList");
+@onready var bank_counter := find_child("BankCounter")
+@onready var ips_counter := find_child("IpsCounter");
+
 
 var business_nodes: Dictionary;
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_window().min_size = Vector2i(1024, 768);
 	print("Main scene loaded");
+	# no!! should actually only add the unlocked ones
 	for b in Game.businesses:
 		var b_node := b_control.instantiate();
 		b_node.business = b;
-		$ScrollContainer/VBoxContainer.add_child(b_node);
+		businesses_list.add_child(b_node);
 		business_nodes[b.short_name] = b_node;
 		b_node.business_purchased.connect(_on_business_purchased);
 
@@ -54,11 +61,11 @@ func _physics_process(delta):
 
 
 func update_counter():
-	$TestLbl.text = Globals.format_num(Game.counter);
+	bank_counter.text = Globals.format_num(Game.counter);
 
 
 func update_ips():
-	$PerSecLbl.text = 'per second: ' + Globals.format_num(Game.ips, 2);
+	ips_counter.text = 'per second: ' + Globals.format_num(Game.ips, 2);
 
 
 func _on_business_purchased(short_name: String, amount: int):
