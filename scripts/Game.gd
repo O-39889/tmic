@@ -49,6 +49,7 @@ class Business:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# at around 40k or so maybe could put the next business but that's without any flavours and upgrades
 	print("Game autoload loaded");
 	for i in range(BUSINESSES_INFO.size()):
 		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
