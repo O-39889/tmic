@@ -24,8 +24,9 @@ var business;
 
 @onready var upgrade_scene := preload("res://scenes/Upgrade.tscn");
 
-var next_price: float;
+var next_price : float;
 var state : BusinessState = BusinessState.HIDDEN;
+var previous : Control = null;
 
 
 func _ready():
@@ -46,13 +47,27 @@ func _ready():
 
 
 func update():
-	b_count.text = str(business.count);
+	self.state = get_state();
+	self.visible = self.state != BusinessState.HIDDEN;
+	if self.state == BusinessState.LOCKED:
+		b_count.text = "";
+		b_name.text = "???";
+	else:
+		b_count.text = str(business.count);
+		b_name.text = business.full_name;
 	b_price.text = Globals.format_num(business.price);
 
 
 func get_state() -> BusinessState:
-	if Game.counter >= business.initial_price / 2:
-		pass
+	if business.count > 0:
+		return BusinessState.UNLOCKED;
+	if previous == null:
+		return BusinessState.UNLOCKED;
+	if previous.state == BusinessState.LOCKED or previous.state == BusinessState.HIDDEN:
+		return BusinessState.HIDDEN;
+	if self.state == BusinessState.UNLOCKED or Game.counter > business.initial_price / 2:
+		return BusinessState.UNLOCKED;
+	return BusinessState.LOCKED;
 	"""
 	idk how are we gonna do dis
 	basically:
@@ -63,7 +78,9 @@ func get_state() -> BusinessState:
 		then make it unlocked
 		4) otherwise make it locked
 		maybe i'll have to use the previous reference again?
+		also i'll have to make it so that once it's unlocked it can't go locked again
 	"""
+	return BusinessState.UNLOCKED;
 
 
 func _on_buy_button_pressed():

@@ -25,12 +25,15 @@ func _ready():
 	get_window().min_size = Vector2i(1024, 768);
 	print("Main scene loaded");
 	# no!! should actually only add the unlocked ones
+	var previous : Control = null;
 	for b in Game.businesses:
 		var b_node := b_control.instantiate();
+		b_node.previous = previous;
 		b_node.business = b;
 		businesses_list.add_child(b_node);
 		business_nodes[b.short_name] = b_node;
 		b_node.business_purchased.connect(_on_business_purchased);
+		previous = b_node;
 
 
 # for updating UI stuff (counters etc)
