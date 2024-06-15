@@ -5,7 +5,8 @@ extends Node
 @onready var FLAVOURS_INFO : Array = ResourceLoader.load("res://data/flavours.json").data;
 
 var counter : float = 0;
-var businesses : Array;
+var counter_all_time : float = 0;
+var businesses : Array[Business];
 
 var base_click_production : float = 1;
 var clicks : int = 0;
@@ -29,6 +30,7 @@ class Business:
 	var initial_production: float;
 	var production: float;
 	var production_all_time: float;
+	var upgrades: Array;
 	
 	func _init(_id: int, entry: Dictionary):
 		id = _id
@@ -42,6 +44,11 @@ class Business:
 		initial_production = entry["initial_production"];
 		production = entry["initial_production"];
 		production_all_time = 0;
+		upgrades = entry["upgrades"];
+		
+		for u in upgrades:
+			u["purchased"] = false;
+	
 	
 	func base_produce(delta: float) -> float: 
 		return production * count * delta;;

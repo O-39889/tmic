@@ -55,6 +55,7 @@ func _physics_process(delta):
 			
 			b.production_all_time += produced;
 			ips += produced;
+			Game.counter_all_time += produced;
 			Game.counter += produced;
 	ips /= delta;
 	Game.ips = ips;
@@ -81,6 +82,7 @@ func _on_business_purchased(short_name: String, amount: int):
 
 func _on_button_pressed():
 	var produced : float = Game.get_click_production();
+	Game.counter_all_time += produced;
 	Game.counter += produced;
 	update_counter();
 	var pos := get_viewport().get_mouse_position();
