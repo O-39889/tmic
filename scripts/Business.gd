@@ -2,6 +2,19 @@ extends Control
 
 signal business_purchased(short_name, amount)
 
+
+enum BusinessState {
+	# all business after a locked one
+	HIDDEN,
+	# everything hidden and replaced with ???
+	# comes after the last unlocked business
+	LOCKED,
+	# becomes unlocked when the player has at least half
+	# of its initial cost (probably, might tweak later)
+	UNLOCKED,
+}
+
+
 var business;
 @onready var b_name := find_child("Name");
 @onready var b_count := find_child("Count");
@@ -12,6 +25,7 @@ var business;
 @onready var upgrade_scene := preload("res://scenes/Upgrade.tscn");
 
 var next_price: float;
+var state : BusinessState = BusinessState.HIDDEN;
 
 
 func _ready():
@@ -34,6 +48,22 @@ func _ready():
 func update():
 	b_count.text = str(business.count);
 	b_price.text = Globals.format_num(business.price);
+
+
+func get_state() -> BusinessState:
+	if Game.counter >= business.initial_price / 2:
+		pass
+	"""
+	idk how are we gonna do dis
+	basically:
+		1) if it's the first node then make it unlocked automatically
+		2) if it's not the first node and the previous node is
+		either locked or hidden then make this one hidden
+		3) if the player has more than half of its cost in bank
+		then make it unlocked
+		4) otherwise make it locked
+		maybe i'll have to use the previous reference again?
+	"""
 
 
 func _on_buy_button_pressed():
