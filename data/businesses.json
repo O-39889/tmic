@@ -40,6 +40,17 @@
 		"initial_price": 50,
 		"multiplier": 1.125,
 		"initial_production": 2.5,
+		"upgrades":
+			[
+				{
+				"short_name": "cart_1",
+				"full_name": "Wider sunshade",
+				"effect": "Ice cream cart production is doubled.",
+				"description": "To protect the seller. What? Haven't you heard the main rule of ice cream business — never try your own product!",
+				"price": 1000,
+				"required": 1,
+				},
+			],
 	},
 	{
 		"name": "van",
@@ -48,6 +59,7 @@
 		"initial_price": 600,
 		"multiplier": 1.12,
 		"initial_production": 35,
+		"upgrades": [],
 	},
 	{
 		"name": "parlor",
@@ -56,5 +68,6 @@
 		"initial_price": 40000,
 		"multiplier": 1.125,
 		"initial_production": 600,
+		"upgrades": [],
 	},
 ]
