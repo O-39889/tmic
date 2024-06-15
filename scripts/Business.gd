@@ -24,7 +24,6 @@ var business;
 
 @onready var upgrade_scene := preload("res://scenes/Upgrade.tscn");
 
-var next_price : float;
 var state : BusinessState = BusinessState.HIDDEN;
 var previous : Control = null;
 
