@@ -6,6 +6,32 @@
 		"initial_price": 20,
 		"multiplier": 1.1,
 		"initial_production": 0.2,
+		"upgrades": [
+			{
+				"short_name": "cooler_bag_1",
+				"full_name": "Reinforced handles",
+				"effect": "Cooler Bag production is doubled.",
+				"description": "Now you can carry almost double the weight in them.",
+				"price": 100,
+				"required": 1,
+			},
+			{
+				"short_name": "cooler_bag_25",
+				"full_name": "Modern insulation",
+				"effect": "Cooler Bag production is doubled.",
+				"description": "Can also be useful for storing hot food, but who wants THAT?",
+				"price": 500,
+				"required": 25,
+			},
+			{
+				"short_name": "cooler_bag_50",
+				"full_name": "Fashionable materials",
+				"effect": "Cooler Bag production is doubled.",
+				"description": "Now even almost eco-friendly!",
+				"price": 2500,
+				"required": 50,
+			},
+		],
 	},
 	{
 		"name": "cart",
