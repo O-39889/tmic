@@ -7,14 +7,11 @@ var business;
 @onready var b_count := find_child("Count");
 @onready var b_price := find_child("Price");
 @onready var b_utton := find_child("BuyButton");
-@onready var timer := find_child("TooltipTimer");
 @onready var upgrades_list := find_child("UpgradesList");
 
 @onready var upgrade_scene := preload("res://scenes/Upgrade.tscn");
 
 var next_price: float;
-var tooltip : Control = null;
-
 
 
 func _ready():
@@ -46,19 +43,3 @@ func _on_buy_button_pressed():
 
 func _process(delta):
 	b_utton.disabled = business.price > Game.counter;
-
-
-func _on_panel_container_mouse_entered():
-	timer.start(1);
-	pass;
-
-
-func _on_panel_container_mouse_exited():
-	if tooltip != null:
-		tooltip.queue_free();
-	timer.stop();
-	b_utton.text = "Buy";
-
-
-func _on_tooltip_timer_timeout():
-	b_utton.text = "Tooltip";
