@@ -55,6 +55,7 @@ func update():
 		b_count.text = str(business.count);
 		b_name.text = business.full_name;
 	b_price.text = Globals.format_num(business.price);
+	b_utton.disabled = business.price > Game.counter;
 
 
 func get_state() -> BusinessState:
@@ -88,4 +89,4 @@ func _on_buy_button_pressed():
 
 
 func _process(delta):
-	b_utton.disabled = business.price > Game.counter;
+	update();
