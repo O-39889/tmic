@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bcfhynx8dauc7"]
-
-[ext_resource type="PackedScene" uid="uid://doqj2hxmuqd88" path="res://scenes/TooltipBase.tscn" id="1_cfugt"]
-
-[node name="BusinessTooltip" instance=ExtResource("1_cfugt")]

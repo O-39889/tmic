@@ -1,5 +1,4 @@
 [gd_scene format=3 uid="uid://doqj2hxmuqd88"]
 
-[node name="TooltipBase" type="PanelContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TooltipBase" type="Control"]
+layout_mode = 3
