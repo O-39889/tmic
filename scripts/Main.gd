@@ -22,6 +22,7 @@ var business_nodes: Dictionary;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	find_child("SpinBox").max_value = INF;
 	get_window().min_size = Vector2i(1024, 768);
 	print("Main scene loaded");
 	# no!! should actually only add the unlocked ones
@@ -84,6 +85,7 @@ func _on_business_purchased(short_name: String, amount: int):
 
 
 func _on_button_pressed():
+	Game.base_click_production = find_child("SpinBox").value;
 	var produced : float = Game.get_click_production();
 	Game.counter_all_time += produced;
 	Game.counter += produced;

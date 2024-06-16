@@ -20,59 +20,74 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="ThreeContainer"]
+[node name="Leftmost" type="PanelContainer" parent="ThreeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PanelContainer2" type="PanelContainer" parent="ThreeContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="ThreeContainer/Leftmost"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ThreeContainer/Leftmost/CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ThreeContainer/Leftmost/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Clicks per second:"
+
+[node name="SpinBox" type="SpinBox" parent="ThreeContainer/Leftmost/CenterContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+
+[node name="BusinessList" type="PanelContainer" parent="ThreeContainer"]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="ThreeContainer/PanelContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="ThreeContainer/BusinessList"]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="ScrollContainer" type="ScrollContainer" parent="ThreeContainer/PanelContainer2/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="ThreeContainer/BusinessList/MarginContainer"]
 clip_contents = false
 layout_mode = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="BusinessesList" type="VBoxContainer" parent="ThreeContainer/PanelContainer2/MarginContainer/ScrollContainer"]
+[node name="BusinessesList" type="VBoxContainer" parent="ThreeContainer/BusinessList/MarginContainer/ScrollContainer"]
 custom_minimum_size = Vector2(320, 150)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="ThreeContainer"]
+[node name="Rightmost" type="CenterContainer" parent="ThreeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ThreeContainer/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ThreeContainer/Rightmost"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BankCounter" type="Label" parent="ThreeContainer/CenterContainer/VBoxContainer"]
+[node name="BankCounter" type="Label" parent="ThreeContainer/Rightmost/VBoxContainer"]
 layout_mode = 2
 text = "0"
 horizontal_alignment = 1
 
-[node name="IpsCounter" type="Label" parent="ThreeContainer/CenterContainer/VBoxContainer"]
+[node name="IpsCounter" type="Label" parent="ThreeContainer/Rightmost/VBoxContainer"]
 layout_mode = 2
 text = "per second:"
 horizontal_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="ThreeContainer/CenterContainer/VBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="ThreeContainer/Rightmost/VBoxContainer"]
 custom_minimum_size = Vector2(0, 269)
 layout_mode = 2
 
-[node name="ClickMeBtn" type="Button" parent="ThreeContainer/CenterContainer/VBoxContainer/CenterContainer"]
+[node name="ClickMeBtn" type="Button" parent="ThreeContainer/Rightmost/VBoxContainer/CenterContainer"]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Click me!!!"
 
-[connection signal="pressed" from="ThreeContainer/CenterContainer/VBoxContainer/CenterContainer/ClickMeBtn" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="ThreeContainer/Rightmost/VBoxContainer/CenterContainer/ClickMeBtn" to="." method="_on_button_pressed"]
