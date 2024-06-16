@@ -4,7 +4,7 @@
 		"full_name": "Cooler Bag",
 		"description": "Portable storage to carry around and sell more ice cream. Thermal insulation allows to keep it cool for some time. Produces 1 unit every 5 seconds.",
 		"initial_price": 20,
-		"multiplier": 1.1,
+		"multiplier": 1.125,
 		"initial_production": 0.2,
 		"upgrades": [
 			{
@@ -37,9 +37,9 @@
 		"name": "cart",
 		"full_name": "Ice cream cart",
 		"description": "Even though its wheels actually don't even work, it still can add to the atmosphere of a wedding or any other celebration.",
-		"initial_price": 50,
-		"multiplier": 1.125,
-		"initial_production": 2.5,
+		"initial_price": 100,
+		"multiplier": 1.1,
+		"initial_production": 3,
 		"upgrades":
 			[
 				{
