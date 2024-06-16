@@ -32,7 +32,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="ThreeContainer/Leftmost/CenterContainer/VBoxContainer"]
 layout_mode = 2
-text = "Clicks per second:"
+text = "ice cream per click:"
 
 [node name="SpinBox" type="SpinBox" parent="ThreeContainer/Leftmost/CenterContainer/VBoxContainer"]
 layout_mode = 2
