@@ -1,7 +1,7 @@
 extends Label
 
-const SPEED = 69;
-const FADE_TIME = 1.69;
+const SPEED = 42.6969696969696969;
+const FADE_TIME = 3;
 @onready var timer := get_tree().create_timer(FADE_TIME);
 
 
