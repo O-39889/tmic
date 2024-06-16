@@ -16,6 +16,7 @@ var ips : float = 0;
 var multipliers := {};
 
 var flavours := {};
+var upgrades := {};
 
 
 class Business:
@@ -33,25 +34,25 @@ class Business:
 	var upgrades: Array;
 	
 	func _init(_id: int, entry: Dictionary):
-		id = _id
-		short_name = entry["name"];
-		full_name = entry["full_name"];
-		description = entry["description"];
-		initial_price = entry["initial_price"];
-		price = entry["initial_price"];
-		multiplier = entry["multiplier"];
-		count = 0;
-		initial_production = entry["initial_production"];
-		production = entry["initial_production"];
-		production_all_time = 0;
-		upgrades = entry["upgrades"];
+		self.id = _id
+		self.short_name = entry["name"];
+		self.full_name = entry["full_name"];
+		self.description = entry["description"];
+		self.initial_price = entry["initial_price"];
+		self.price = entry["initial_price"];
+		self.multiplier = entry["multiplier"];
+		self.count = 0;
+		self.initial_production = entry["initial_production"];
+		self.production = entry["initial_production"];
+		self.production_all_time = 0;
+		self.upgrades = entry["upgrades"];
 		
-		for u in upgrades:
+		for u in self.upgrades:
 			u["purchased"] = false;
 	
 	
 	func base_produce(delta: float) -> float: 
-		return production * count * delta;;
+		return self.production * self.count * delta;;
 
 
 # Called when the node enters the scene tree for the first time.
@@ -61,6 +62,7 @@ func _ready():
 	for i in range(BUSINESSES_INFO.size()):
 		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
 		businesses.append(b);
+		upgrades[b.short_name] = {};
 	var vanilla_flavour : Dictionary = FLAVOURS_INFO[0];
 	flavours[vanilla_flavour["short_name"]] = vanilla_flavour;
 	multipliers["flavours"] = vanilla_flavour["bonus"];
