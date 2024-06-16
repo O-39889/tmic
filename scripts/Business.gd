@@ -90,3 +90,8 @@ func _on_buy_button_pressed():
 
 func _process(delta):
 	update();
+
+
+func get_tooltip_node() -> Control:
+	# generate the node
+	return null;
