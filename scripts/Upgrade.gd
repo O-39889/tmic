@@ -18,6 +18,7 @@ var previous : Button = null;
 
 func _ready():
 	update();
+	self.text = str(upgrade["required"]);
 
 
 func _process(delta):
@@ -58,11 +59,3 @@ func get_state() -> UpgradeState:
 
 func _on_pressed():
 	print(upgrade["full_name"]);
-
-
-func _on_mouse_entered():
-	self.text = "¡¡¡";
-
-
-func _on_mouse_exited():
-	self.text = "!!!";
