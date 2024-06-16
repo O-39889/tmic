@@ -67,9 +67,11 @@ text = "per second:"
 horizontal_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="ThreeContainer/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 269)
 layout_mode = 2
 
 [node name="ClickMeBtn" type="Button" parent="ThreeContainer/CenterContainer/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Click me!!!"
 
