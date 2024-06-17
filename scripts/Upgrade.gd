@@ -59,3 +59,17 @@ func get_state() -> UpgradeState:
 
 func _on_pressed():
 	print(upgrade["full_name"]);
+
+
+func _update_tooltip():
+	tooltip_text = "### **" + upgrade["full_name"] + "**\n\n";
+	tooltip_text += "*Cost:* " + Globals.format_num(upgrade["price"]) + '\n';
+	tooltip_text += '**' + upgrade["effect"] + '**' + '\n';
+	tooltip_text += '*' + upgrade["description"] + '*' + '\n';
+
+
+func _make_custom_tooltip(for_text):
+	var lbl := MarkdownLabel.new();
+	lbl._set_markdown_text(for_text);
+	print(lbl.markdown_text);
+	return lbl;

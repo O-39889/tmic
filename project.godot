@@ -27,6 +27,10 @@ window/size/viewport_height=720
 window/size/mode=2
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/markdownlabel/plugin.cfg")
+
 [physics]
 
 common/physics_ticks_per_second=30

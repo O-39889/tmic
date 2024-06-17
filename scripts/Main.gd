@@ -1,11 +1,16 @@
 extends Control
 
 
+signal timer_framerule;
+signal timer_slow;
+
+
 const COUNTER_UPDATE_FASTEST : float = 1 / 15;
 const COUNTER_UPDATE_FRAMERULE : float = 0.35; # hehe
 const COUNTER_UPDATE_SLOW : float = 0.7;
 
 var fastest_tick : float = 0;
+var framerule_tick : float = 0;
 
 @onready var FPS : int = Engine.physics_ticks_per_second;
 
@@ -39,15 +44,23 @@ func _ready():
 		business_nodes[b.short_name] = b_node;
 		b_node.business_purchased.connect(_on_business_purchased);
 		previous = b_node;
+		for u in b_node.upgrades_list.get_children():
+			print(u.upgrade.full_name);
+			timer_framerule.connect(u._update_tooltip);
+		print('\n')
 
 
 # for updating UI stuff (counters etc)
 func _process(delta):
 	fastest_tick += delta;
+	framerule_tick += delta;
 	if fastest_tick >= COUNTER_UPDATE_FASTEST:
 		fastest_tick = 0;
 		update_counter();
 		update_ips();
+	if framerule_tick >= COUNTER_UPDATE_FRAMERULE:
+		framerule_tick = 0;
+		timer_framerule.emit();
 	pass
 
 
