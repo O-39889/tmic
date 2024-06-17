@@ -2,14 +2,14 @@
 	{
 		"short_name": "ext_whisk",
 		"full_name": "Extended whisking process",
-		"effect": "Clicking production is doubled.",
+		"effect": "Clicking production is **doubled**.",
 		"description": "Churning is an extremely important part of the ice cream-making process. It prevents ice crystals from forming, ensuring that creamy, light texture that we all know and love. However, for now you'll have to do this by hand.",
 		"price": 100,
 	},
 	{
 		"short_name": "refrigerants",
 		"full_name": "Better refrigerants",
-		"effect": "Clicking production is doubled.",
+		"effect": "Clicking production is **doubled**.",
 		"description": "Lower toxicity can lead to fewer workplace accidents.\nCome to think of it, this applies not only to chemical compounds…",
 		"price": 200,
 	}

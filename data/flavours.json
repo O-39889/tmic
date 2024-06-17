@@ -39,4 +39,12 @@
 		"unlocked": 8000,
 		"bonus": 0.015,
 	},
+	{
+		"short_name": "coffee",
+		"full_name": "Coffee",
+		"description": "It doesn't quite taste like coffee, neither does it actually have any caffeine, although for some people who don't usually drink coffee these are the actual reasons they buy it. Surprisingly popular in some northeastern US states and Patagonia.",
+		"price": 80000,
+		"unlocked": 10000,
+		"bonus": 0.01,
+	},
 ]

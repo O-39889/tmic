@@ -62,7 +62,7 @@ func _on_pressed():
 
 
 func _update_tooltip():
-	tooltip_text = "### **" + upgrade["full_name"] + "**\n######\n";
+	tooltip_text = "### **" + upgrade["full_name"] + "**\n\n";
 	tooltip_text += "Cost: " + Globals.format_num(upgrade["price"]) + '\n';
 	tooltip_text += "Required: ";
 	if business.count < upgrade["required"]:
@@ -70,7 +70,7 @@ func _update_tooltip():
 	else:
 		tooltip_text += "[color=white]";
 	tooltip_text += str(upgrade["required"]) + "[/color]\n";
-	tooltip_text += '**' + upgrade["effect"] + '**' + '\n######\n';
+	tooltip_text += upgrade["effect"] + '\n\n';
 	tooltip_text += '*' + upgrade["description"] + '*';
 
 
