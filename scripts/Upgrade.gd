@@ -62,18 +62,15 @@ func _on_pressed():
 
 
 func _update_tooltip():
-	tooltip_text = "[font_size=20][b]" + upgrade["full_name"] + "[/b][/font_size]\n\n";
+	tooltip_text = "### **" + upgrade["full_name"] + "**\n\n";
 	tooltip_text += "Cost: " + Globals.format_num(upgrade["price"]) + '\n';
-	tooltip_text += '[b]' + upgrade["effect"] + '[/b]' + '\n';
-	tooltip_text += '[font_size=15][i]' + upgrade["description"] + '[/i][/font_size]';
+	tooltip_text += '**' + upgrade["effect"] + '**' + '\n\n';
+	tooltip_text += '*' + upgrade["description"] + '*' + '\n';
 
 
 func _make_custom_tooltip(for_text):
-	var lbl := RichTextLabel.new();
-	lbl.custom_minimum_size.x = 200;
-	lbl.custom_minimum_size.y = 100;
+	var lbl := MarkdownLabel.new();
+	lbl._set_markdown_text(for_text);
 	lbl.fit_content = true;
-	lbl.bbcode_enabled = true;
-	lbl.text = for_text;
-	print(lbl.text);
+	lbl.custom_minimum_size = Vector2(300, 100);
 	return lbl;
