@@ -17,6 +17,8 @@ var fastest_tick : float = 0;
 @onready var ips_counter := find_child("IpsCounter");
 @onready var clickme := find_child("ClickMe");
 
+@onready var bs_arr := Game.bs_arr;
+@onready var bs_dict := Game.bs_dict;
 
 var business_nodes: Dictionary;
 
