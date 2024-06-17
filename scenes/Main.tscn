@@ -86,11 +86,5 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 269)
 layout_mode = 2
 
-[node name="ClickMeBtn" type="Button" parent="ThreeContainer/Rightmost/VBoxContainer/CenterContainer"]
-visible = false
-custom_minimum_size = Vector2(150, 50)
-layout_mode = 2
-text = "Click me!!!"
-
 [node name="ClickMe" parent="ThreeContainer/Rightmost/VBoxContainer/CenterContainer" instance=ExtResource("2_e5n4g")]
 layout_mode = 2
