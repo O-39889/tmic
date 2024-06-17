@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://oit24pi7quno"]
+
+[ext_resource type="Script" path="res://scripts/ClickMe.gd" id="1_dovui"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ouq1n"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_td2aa"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7vp0x"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vamtt"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_knb0k"]
+
+[node name="AspectRatioContainer" type="AspectRatioContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ClickMe" type="TextureButton" parent="."]
+modulate = Color(0.681423, 0.681423, 0.681423, 1)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture_normal = SubResource("PlaceholderTexture2D_ouq1n")
+texture_pressed = SubResource("PlaceholderTexture2D_td2aa")
+texture_hover = SubResource("PlaceholderTexture2D_7vp0x")
+texture_disabled = SubResource("PlaceholderTexture2D_vamtt")
+texture_focused = SubResource("PlaceholderTexture2D_knb0k")
+script = ExtResource("1_dovui")
+
+[connection signal="mouse_entered" from="ClickMe" to="ClickMe" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ClickMe" to="ClickMe" method="_on_mouse_exited"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://oit24pi7quno"]
+
+[ext_resource type="Texture2D" uid="uid://puou6pdgyigj" path="res://assets/textures/ClickMePlaceholder.tres" id="1_0gcv5"]
+[ext_resource type="Script" path="res://scripts/ClickMe.gd" id="1_dovui"]
+
+[node name="AspectRatioContainer" type="AspectRatioContainer"]
+custom_minimum_size = Vector2(150, 150)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ClickMe" type="TextureButton" parent="."]
+modulate = Color(0.681423, 0.681423, 0.681423, 1)
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture_normal = ExtResource("1_0gcv5")
+texture_pressed = ExtResource("1_0gcv5")
+texture_hover = ExtResource("1_0gcv5")
+texture_disabled = ExtResource("1_0gcv5")
+texture_focused = ExtResource("1_0gcv5")
+script = ExtResource("1_dovui")
+
+[connection signal="mouse_entered" from="ClickMe" to="ClickMe" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ClickMe" to="ClickMe" method="_on_mouse_exited"]
+[connection signal="pressed" from="ClickMe" to="ClickMe" method="_on_pressed"]
