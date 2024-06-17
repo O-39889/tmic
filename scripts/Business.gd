@@ -48,6 +48,7 @@ func _ready():
 func update():
 	self.state = get_state();
 	self.visible = self.state != BusinessState.HIDDEN;
+	self.upgrades_list.visible = self.state == BusinessState.UNLOCKED;
 	if self.state == BusinessState.LOCKED:
 		b_count.text = "";
 		b_name.text = "???";
