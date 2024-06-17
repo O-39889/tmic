@@ -29,7 +29,7 @@ func _ready():
 	get_window().min_size = Vector2i(1024, 768);
 	# no!! should actually only add the unlocked ones
 	var previous : Control = null;
-	for b in Game.businesses:
+	for b in Game.bs_arr:
 		var b_node := b_control.instantiate();
 		b_node.previous = previous;
 		b_node.business = b;
@@ -52,7 +52,7 @@ func _process(delta):
 # for updating game logic stuff (production etc)
 func _physics_process(delta):
 	var ips : float = 0;
-	for b in Game.businesses:
+	for b in Game.bs_arr:
 		if b.count > 0:
 			var produced : float = b.base_produce(delta);
 			
