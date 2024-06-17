@@ -15,6 +15,7 @@ var fastest_tick : float = 0;
 @onready var businesses_list := find_child("BusinessesList");
 @onready var bank_counter := find_child("BankCounter")
 @onready var ips_counter := find_child("IpsCounter");
+@onready var clickme := find_child("ClickMe");
 
 
 var business_nodes: Dictionary;
@@ -22,9 +23,10 @@ var business_nodes: Dictionary;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("Main scene loaded");
+	clickme.clicked.connect(_on_clicked);
 	find_child("SpinBox").max_value = INF;
 	get_window().min_size = Vector2i(1024, 768);
-	print("Main scene loaded");
 	# no!! should actually only add the unlocked ones
 	var previous : Control = null;
 	for b in Game.businesses:
@@ -74,6 +76,19 @@ func update_ips():
 	ips_counter.text = 'per second: ' + Globals.format_num(Game.ips, 2);
 
 
+func handle_click():
+	Game.base_click_production = find_child("SpinBox").value;
+	var produced : float = Game.get_click_production();
+	Game.counter_all_time += produced;
+	Game.counter += produced;
+	update_counter();
+	var pos := get_viewport().get_mouse_position();
+	var label := click_label.instantiate();
+	label.text = Globals.format_num(produced);
+	label.position = pos - Vector2(0, 25);
+	add_child(label);
+
+
 func _on_business_purchased(short_name: String, amount: int):
 	var b_node : PanelContainer = business_nodes[short_name];
 	b_node.business.count += 1;
@@ -85,13 +100,8 @@ func _on_business_purchased(short_name: String, amount: int):
 
 
 func _on_button_pressed():
-	Game.base_click_production = find_child("SpinBox").value;
-	var produced : float = Game.get_click_production();
-	Game.counter_all_time += produced;
-	Game.counter += produced;
-	update_counter();
-	var pos := get_viewport().get_mouse_position();
-	var label := click_label.instantiate();
-	label.text = Globals.format_num(produced);
-	label.position = pos - Vector2(0, 25);
-	add_child(label);
+	pass
+
+
+func _on_clicked():
+	handle_click();

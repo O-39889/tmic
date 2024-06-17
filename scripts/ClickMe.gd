@@ -1,4 +1,7 @@
-extends TextureButton
+extends AspectRatioContainer
+
+
+signal clicked;
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,5 +22,5 @@ func _on_mouse_exited():
 	modulate = Color("#aeaeae")
 
 
-func _on_pressed():
-	print("Pressed!");
+func _on_click_me_pressed():
+	clicked.emit();

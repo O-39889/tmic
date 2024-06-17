@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://i15pl33k6qwe"]
+[gd_scene load_steps=3 format=3 uid="uid://i15pl33k6qwe"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_exypd"]
+[ext_resource type="PackedScene" uid="uid://oit24pi7quno" path="res://scenes/ClickMe.tscn" id="2_e5n4g"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -86,8 +87,10 @@ custom_minimum_size = Vector2(0, 269)
 layout_mode = 2
 
 [node name="ClickMeBtn" type="Button" parent="ThreeContainer/Rightmost/VBoxContainer/CenterContainer"]
+visible = false
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Click me!!!"
 
-[connection signal="pressed" from="ThreeContainer/Rightmost/VBoxContainer/CenterContainer/ClickMeBtn" to="." method="_on_button_pressed"]
+[node name="ClickMe" parent="ThreeContainer/Rightmost/VBoxContainer/CenterContainer" instance=ExtResource("2_e5n4g")]
+layout_mode = 2
