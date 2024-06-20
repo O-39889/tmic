@@ -32,7 +32,6 @@ var business_nodes: Dictionary;
 func _ready():
 	print("Main scene loaded");
 	clickme.clicked.connect(_on_clicked);
-	find_child("SpinBox").max_value = INF;
 	get_window().min_size = Vector2i(1024, 768);
 	# no!! should actually only add the unlocked ones
 	var previous : Control = null;
@@ -92,7 +91,6 @@ func update_ips():
 
 
 func handle_click():
-	Game.base_click_production = find_child("SpinBox").value;
 	var produced : float = Game.get_click_production();
 	Game.counter_all_time += produced;
 	Game.counter += produced;
