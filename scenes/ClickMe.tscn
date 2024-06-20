@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://puou6pdgyigj" path="res://assets/textures/ClickMePlaceholder.tres" id="1_0gcv5"]
 [ext_resource type="Script" path="res://scripts/ClickMe.gd" id="1_dovui"]
 
-[node name="ClickMe" type="AspectRatioContainer"]
+[node name="ClickMe" type="CenterContainer"]
 modulate = Color(0.682353, 0.682353, 0.682353, 1)
 custom_minimum_size = Vector2(150, 150)
 offset_right = 40.0

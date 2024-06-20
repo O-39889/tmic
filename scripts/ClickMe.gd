@@ -1,4 +1,4 @@
-extends AspectRatioContainer
+extends CenterContainer
 
 
 signal clicked;
