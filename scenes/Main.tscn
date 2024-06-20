@@ -23,6 +23,37 @@ layout_mode = 2
 
 [node name="GridContainer" type="GridContainer" parent="ThreeContainer/Leftmost/VBoxContainer"]
 layout_mode = 2
+columns = 2
+
+[node name="OptionsBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = " Options"
+
+[node name="ResetBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Reset"
+
+[node name="StatsBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Stats"
+
+[node name="HSeparator" type="HSeparator" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+
+[node name="FlavoursBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+text = "Menu"
+
+[node name="HSeparator2" type="HSeparator" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+
+[node name="TechsBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+text = "Tech Tree"
+
+[node name="TechShortcuts" type="HFlowContainer" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
 
 [node name="BusinessList" type="PanelContainer" parent="ThreeContainer"]
 custom_minimum_size = Vector2(320, 0)
