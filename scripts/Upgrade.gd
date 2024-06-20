@@ -36,15 +36,16 @@ func get_state() -> UpgradeState:
 	1) if the upgrade is purchased then display it (of course)
 	2) if it's already displayed then continue to display it
 	3) if it's the first upgrade then always display it
+		* actually no, don't display it when no businesses are purchased
 	4) otherwise, if the previous upgrade is locked or hidden then hide it
 	5) 
 	'''
 	if upgrade["purchased"]:
 		return UpgradeState.PURCHASED;
 	if previous == null:
-		# first one is never hidden
+		# first one is never hidden?
 		if business.count < upgrade["required"]:
-			return UpgradeState.LOCKED;
+			return UpgradeState.HIDDEN;
 		if Game.counter < upgrade["price"]:
 			return UpgradeState.UNLOCKED_NOT_AFFORDABLE;
 	else:
