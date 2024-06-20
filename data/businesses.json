@@ -2,7 +2,7 @@
 	{
 		"name": "cooler_bag",
 		"full_name": "Cooler Bag",
-		"description": "Portable storage to carry around and sell more ice cream. Thermal insulation allows to keep it cool for some time. Produces 1 unit every 5 seconds.",
+		"description": "Portable storage to carry around and sell more ice cream. Thermal insulation allows it to keep it cold for some time. Produces 1 unit every 5 seconds.",
 		"initial_price": 20,
 		"multiplier": 1.125,
 		"initial_production": 0.2,
@@ -46,7 +46,7 @@
 				"short_name": "cart_1",
 				"full_name": "Wider sunshade",
 				"effect": "Ice cream cart production is **doubled**.",
-				"description": "To protect the seller. What? Haven't you heard the main rule of ice cream business — never try your own product!",
+				"description": "To protect the seller. What? They can't just eat the ice cream! Have you never heard of the main ice cream business rule? Never try your own product!.. without paying for it out of your pocket.",
 				"price": 1000,
 				"required": 1,
 				},
@@ -59,7 +59,16 @@
 		"initial_price": 600,
 		"multiplier": 1.12,
 		"initial_production": 35,
-		"upgrades": [],
+		"upgrades": [
+			{
+				"short_name": "van_1",
+				"full_name": "Ice cream cart wheels",
+				"effect": "Ice cream van production is **doubled**.",
+				"description": "…You thought it would look more fun.",
+				"price": 6000,
+				"required": 1,
+			},
+		],
 	},
 	{
 		"name": "parlor",
