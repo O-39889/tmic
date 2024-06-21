@@ -1,6 +1,9 @@
 extends Button
 
 
+signal upgrade_purchased(business, upgrade);
+
+
 enum UpgradeState {
 	HIDDEN,
 	LOCKED,
@@ -59,7 +62,8 @@ func get_state() -> UpgradeState:
 
 
 func _on_pressed():
-	print(upgrade["full_name"]);
+	if Game.counter >= upgrade["price"] and not upgrade["purchased"]:
+		upgrade_purchased.emit(business, upgrade);
 
 
 func _update_tooltip():

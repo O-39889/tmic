@@ -46,6 +46,7 @@ func _ready():
 		for u in b_node.upgrades_list.get_children():
 			print(u.upgrade.full_name);
 			timer_framerule.connect(u._update_tooltip);
+			u.upgrade_purchased.connect(_on_upgrade_purchased);
 		print('\n')
 
 
@@ -68,17 +69,23 @@ func _physics_process(delta):
 	var ips : float = 0;
 	for b in bs_arr:
 		if b.count > 0:
-			var produced : float = b.base_produce(delta);
+			var produced : float = b.initial_production;
 			
 			# and other multipliers as well
 			produced *= Game.multipliers["flavours"];
+			
+			# for example
+			produced *= Game.multipliers["businesses"][b.short_name];
+			
+			b.production = produced;
+			
+			produced = b.base_produce(delta);
 			
 			b.production_all_time += produced;
 			ips += produced;
 			Game.counter_all_time += produced;
 			Game.counter += produced;
-	ips /= delta;
-	Game.ips = ips;
+	Game.ips = ips / delta;
 	update_ips();
 
 
@@ -110,6 +117,14 @@ func _on_business_purchased(short_name: String, amount: int):
 	b_node.update();
 	var game_b;
 	Game.counter -= current_price;
+
+
+func _on_upgrade_purchased(b: RefCounted, upgrade: Dictionary):
+	var id : String = upgrade["short_name"];
+	if "cooler_bag" in id:
+		match id:
+			"cooler_bag_1", "cooler_bag_25", "cooler_bag_50":
+				Game.multipliers["businesses"]["cooler_bag"] *= 2.0;
 
 
 func _on_button_pressed():

@@ -70,6 +70,10 @@ func _ready():
 	var vanilla_flavour : Dictionary = FLAVOURS_INFO[0];
 	flavours[vanilla_flavour["short_name"]] = vanilla_flavour;
 	multipliers["flavours"] = vanilla_flavour["bonus"];
+	
+	multipliers["businesses"] = {};
+	for b in bs_arr:
+		multipliers["businesses"][b.short_name] = 1.0;
 
 
 func get_click_production():
