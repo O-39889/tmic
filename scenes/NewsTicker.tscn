@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bclyrbh0ul0f7"]
+
+[ext_resource type="Script" path="res://scripts/NewsTicker.gd" id="1_ow076"]
+
+[node name="NewsTicker" type="Panel"]
+script = ExtResource("1_ow076")
