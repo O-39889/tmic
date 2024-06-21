@@ -83,7 +83,7 @@ func _physics_process(delta):
 
 
 func update_counter():
-	bank_counter.text = Globals.format_num(Game.counter);
+	bank_counter.text = Globals.format_num(floorf(Game.counter));
 
 
 func update_ips():
