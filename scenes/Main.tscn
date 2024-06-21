@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://i15pl33k6qwe"]
+[gd_scene load_steps=4 format=3 uid="uid://i15pl33k6qwe"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_exypd"]
 [ext_resource type="PackedScene" uid="uid://oit24pi7quno" path="res://scenes/ClickMe.tscn" id="2_e5n4g"]
+[ext_resource type="PackedScene" uid="uid://bclyrbh0ul0f7" path="res://scenes/NewsTicker.tscn" id="3_4r544"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_exypd")
@@ -149,7 +150,5 @@ size_flags_horizontal = 8
 text = "0"
 horizontal_alignment = 2
 
-[node name="Panel" type="Panel" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 69)
+[node name="NewsTicker" parent="VBoxContainer" instance=ExtResource("3_4r544")]
 layout_mode = 2
-size_flags_vertical = 8

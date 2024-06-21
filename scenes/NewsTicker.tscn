@@ -3,4 +3,6 @@
 [ext_resource type="Script" path="res://scripts/NewsTicker.gd" id="1_ow076"]
 
 [node name="NewsTicker" type="Panel"]
+custom_minimum_size = Vector2(0, 69)
+size_flags_vertical = 8
 script = ExtResource("1_ow076")
