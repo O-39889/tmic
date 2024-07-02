@@ -12,5 +12,12 @@
 		"effect": "Clicking production is **doubled**.",
 		"description": "Lower toxicity can lead to fewer workplace accidents.\nCome to think of it, this applies not only to chemical compounds…",
 		"price": 200,
-	}
+	},
+	{
+		"short_name": "auto_whisk",
+		"full_name": "Automatic whisking",
+		"effect": "Clicking production is **doubled**.",
+		"description": "Now that's much better!",
+		"price": 600,
+	},
 ]

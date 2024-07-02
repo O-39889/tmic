@@ -3,9 +3,9 @@
 		"name": "cooler_bag",
 		"full_name": "Cooler Bag",
 		"description": "Portable storage to carry around and sell more ice cream. Thermal insulation allows it to keep it cold for some time. Produces 1 unit every 5 seconds.",
-		"initial_price": 20,
-		"multiplier": 1.125,
-		"initial_production": 0.2,
+		"initial_price": 10,
+		"multiplier": 1.15,
+		"initial_production": 0.20,
 		"upgrades": [
 			{
 				"short_name": "cooler_bag_1",
