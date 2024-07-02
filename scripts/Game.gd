@@ -22,42 +22,6 @@ var flavours := {};
 var upgrades := {};
 
 
-class Business:
-	var id: int;
-	var short_name: String;
-	var full_name: String;
-	var description: String;
-	var initial_price: float;
-	var price: float;
-	var multiplier: float;
-	var count: int;
-	var initial_production: float;
-	var production: float;
-	var production_all_time: float;
-	var upgrades: Array;
-	
-	func _init(_id: int, entry: Dictionary):
-		self.id = _id
-		self.short_name = entry["name"];
-		self.full_name = entry["full_name"];
-		self.description = entry["description"];
-		self.initial_price = entry["initial_price"];
-		self.price = entry["initial_price"];
-		self.multiplier = entry["multiplier"];
-		self.count = 0;
-		self.initial_production = entry["initial_production"];
-		self.production = entry["initial_production"];
-		self.production_all_time = 0;
-		self.upgrades = entry["upgrades"];
-		
-		for u in self.upgrades:
-			u["purchased"] = false;
-	
-	
-	func base_produce(delta: float) -> float: 
-		return self.production * self.count * delta;;
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# at around 40k or so maybe could put the next business but that's without any flavours and upgrades

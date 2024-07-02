@@ -13,15 +13,25 @@ enum UpgradeState {
 }
 
 
+@onready var test_counter = upgrade.required;
 var business : RefCounted;
-var upgrade : Dictionary;
-var state : UpgradeState;
+var upgrade : Upgrade;
+var state : UpgradeState:
+	get:
+		return state;
+	set(value):
+		state = value;
+		self.visible = self.state != UpgradeState.HIDDEN;
+		self.disabled = (self.state != UpgradeState.UNLOCKED_AFFORDABLE
+			and self.state != UpgradeState.PURCHASED);
+
 var previous : Button = null;
 
 
 func _ready():
 	update();
-	self.text = str(upgrade["required"]);
+	self.text = str(upgrade.required);
+	EventBus.update_framerule.connect(_on_framerule_update);
 
 
 func _process(delta):
@@ -30,53 +40,49 @@ func _process(delta):
 
 func update():
 	self.state = get_state();
-	self.visible = self.state != UpgradeState.HIDDEN;
-	self.disabled = self.state != UpgradeState.UNLOCKED_AFFORDABLE and self.state != UpgradeState.PURCHASED;
 
 
 func get_state() -> UpgradeState:
-	'''
-	1) if the upgrade is purchased then display it (of course)
-	2) if it's already displayed then continue to display it
-	3) if it's the first upgrade then always display it
-		* actually no, don't display it when no businesses are purchased
-	4) otherwise, if the previous upgrade is locked or hidden then hide it
-	5) 
-	'''
 	if upgrade["purchased"]:
 		return UpgradeState.PURCHASED;
 	if previous == null:
-		# first one is never hidden?
-		if business.count < upgrade["required"]:
+		# first one is never hidden (of course when there's at least
+		# one business purchased)
+		# but seems like we don't need a specific condtion in here
+		# since it's jut gonna return UNLOCKED_AFFORDABLE in the end
+		if business.count < upgrade.required:
 			return UpgradeState.HIDDEN;
-		if Game.counter < upgrade["price"]:
+		if Game.counter < upgrade.price:
 			return UpgradeState.UNLOCKED_NOT_AFFORDABLE;
 	else:
 		if previous.state == UpgradeState.LOCKED or previous.state == UpgradeState.HIDDEN:
 			return UpgradeState.HIDDEN;
-		if business.count < upgrade["required"]:
+		if business.count < upgrade.required:
 			return UpgradeState.LOCKED;
-		if Game.counter < upgrade["price"]:
+		if Game.counter < upgrade.price:
 			return UpgradeState.UNLOCKED_NOT_AFFORDABLE;
 	return UpgradeState.UNLOCKED_AFFORDABLE;
 
 
 func _on_pressed():
-	if Game.counter >= upgrade["price"] and not upgrade["purchased"]:
-		upgrade_purchased.emit(business, upgrade);
+	if Game.counter >= upgrade.price and not upgrade.purchased:
+		EventBus.upgrade_purchased.emit(self.business, self.upgrade);
+		#upgrade_purchased.emit(business, upgrade);
 
 
+# when is it called?
+# seems like it isn't called anywhere bruh
 func _update_tooltip():
-	tooltip_text = "### **" + upgrade["full_name"] + "**\n\n";
-	tooltip_text += "Cost: " + Globals.format_num(upgrade["price"]) + '\n';
+	tooltip_text = "### **" + upgrade.full_name + "**\n\n";
+	tooltip_text += "Cost: " + Globals.format_num(upgrade.price) + '\n';
 	tooltip_text += "Required: ";
-	if business.count < upgrade["required"]:
+	if business.count < upgrade.required:
 		tooltip_text += "[color=#ff6666]";
 	else:
 		tooltip_text += "[color=white]";
-	tooltip_text += str(upgrade["required"]) + "[/color]\n";
-	tooltip_text += upgrade["effect"] + '\n\n';
-	tooltip_text += '*' + upgrade["description"] + '*';
+	tooltip_text += str(upgrade.required) + "[/color]\n";
+	tooltip_text += upgrade.effect + '\n\n';
+	tooltip_text += '*' + upgrade.description + '*';
 
 
 func _make_custom_tooltip(for_text):
@@ -85,3 +91,7 @@ func _make_custom_tooltip(for_text):
 	lbl.fit_content = true;
 	lbl.custom_minimum_size = Vector2(300, 100);
 	return lbl;
+
+
+func _on_framerule_update():
+	_update_tooltip();

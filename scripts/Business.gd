@@ -15,7 +15,7 @@ enum BusinessState {
 }
 
 
-var business;
+var business : Business;
 @onready var b_name := find_child("Name");
 @onready var b_count := find_child("Count");
 @onready var b_price := find_child("Price");
@@ -24,31 +24,44 @@ var business;
 
 @onready var upgrade_scene := preload("res://scenes/Upgrade.tscn");
 
-var state : BusinessState = BusinessState.HIDDEN;
+var state : BusinessState = BusinessState.HIDDEN:
+	get:
+		return state;
+	set(value):
+		assert(state >= BusinessState.HIDDEN
+		and state <= BusinessState.UNLOCKED);
+		state = value;
+		match state:
+			BusinessState.HIDDEN:
+				self.visible = false;
+				return;
+			BusinessState.LOCKED:
+				self.visible = true;
+				self.upgrades_list.visible = false;
+				return;
+			BusinessState.UNLOCKED:
+				self.visible = true;
+				self.upgrades_list.visible = true;
+
 var previous : Control = null;
 
 
 func _ready():
 # assume that the business is already set in there
-	if business == null:
-		print("Error: business for business node " + str(self) + " is not set"); 
-		return;
+	assert(business != null, 'Business for business node' + str(self) + ' not set');
 	var previous_upgrade : Control = null;
 	for u in business.upgrades:
-		var upgrade := upgrade_scene.instantiate();
-		upgrade.business = business;
-		upgrade.upgrade = u;
-		upgrade.previous = previous_upgrade;
-		upgrades_list.add_child(upgrade);
-		previous_upgrade = upgrade;
-	b_name.text = str(business.full_name);
+		var upgrade_node := upgrade_scene.instantiate();
+		upgrade_node.business = business;
+		upgrade_node.upgrade = u;
+		upgrade_node.previous = previous_upgrade;
+		upgrades_list.add_child(upgrade_node);
+		previous_upgrade = upgrade_node;
 	update();
 
 
 func update():
 	self.state = get_state();
-	self.visible = self.state != BusinessState.HIDDEN;
-	self.upgrades_list.visible = self.state == BusinessState.UNLOCKED;
 	if self.state == BusinessState.LOCKED:
 		b_count.text = "";
 		b_name.text = "???";
@@ -69,24 +82,14 @@ func get_state() -> BusinessState:
 	if self.state == BusinessState.UNLOCKED or Game.counter > business.initial_price / 2:
 		return BusinessState.UNLOCKED;
 	return BusinessState.LOCKED;
-	"""
-	idk how are we gonna do dis
-	basically:
-		1) if it's the first node then make it unlocked automatically
-		2) if it's not the first node and the previous node is
-		either locked or hidden then make this one hidden
-		3) if the player has more than half of its cost in bank
-		then make it unlocked
-		4) otherwise make it locked
-		maybe i'll have to use the previous reference again?
-		also i'll have to make it so that once it's unlocked it can't go locked again
-	"""
+	# ???
 	return BusinessState.UNLOCKED;
 
 
 func _on_buy_button_pressed():
 	if business.price <= Game.counter:
-		emit_signal("business_purchased", business.short_name, 1);
+		EventBus.business_purchased.emit(self.business, 1);
+		#emit_signal("business_purchased", business.short_name, 1);
 
 
 func _process(delta):

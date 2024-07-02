@@ -14,8 +14,8 @@ var framerule_tick : float = 0;
 
 @onready var FPS : int = Engine.physics_ticks_per_second;
 
-@onready var b_control := preload("res://scenes/Business.tscn");
-@onready var click_label := preload("res://scenes/FloatingLabel.tscn");
+var b_control := preload("res://scenes/Business.tscn");
+var click_label := preload("res://scenes/FloatingLabel.tscn");
 
 @onready var businesses_list := find_child("BusinessesList");
 @onready var bank_counter := find_child("BankCounter")
@@ -41,13 +41,9 @@ func _ready():
 		b_node.business = b;
 		businesses_list.add_child(b_node);
 		business_nodes[b.short_name] = b_node;
-		b_node.business_purchased.connect(_on_business_purchased);
 		previous = b_node;
-		for u in b_node.upgrades_list.get_children():
-			print(u.upgrade.full_name);
-			timer_framerule.connect(u._update_tooltip);
-			u.upgrade_purchased.connect(_on_upgrade_purchased);
-		print('\n')
+		EventBus.business_purchased.connect(_on_business_purchased);
+		EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
 
 
 # for updating UI stuff (counters etc)
@@ -61,6 +57,7 @@ func _process(delta):
 	if framerule_tick >= COUNTER_UPDATE_FRAMERULE:
 		framerule_tick = 0;
 		timer_framerule.emit();
+		EventBus.update_framerule.emit();
 	pass
 
 
@@ -109,26 +106,27 @@ func handle_click():
 	add_child(label);
 
 
-func _on_business_purchased(short_name: String, amount: int):
-	var b_node : PanelContainer = business_nodes[short_name];
-	b_node.business.count += 1;
-	var current_price : float = b_node.business.price;
-	b_node.business.price = floorf(b_node.business.initial_price * pow(b_node.business.multiplier, b_node.business.count));
+func _on_business_purchased(business: Business, amount: int):
+	var b_node : PanelContainer = business_nodes[business.short_name];
+	business.count += amount;
+	var current_price : float = business.price;
+	b_node.business.price = floorf(business.initial_price * pow(business.multiplier, b_node.business.count));
 	b_node.update();
-	var game_b;
+	var game_b; # ???
 	Game.counter -= current_price;
 
 
-func _on_upgrade_purchased(b: RefCounted, upgrade: Dictionary):
+func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 	var id : String = upgrade["short_name"];
-	if "cooler_bag" in id:
+	print(id);
+	if id.begins_with('cooler_bag'):
 		match id:
 			"cooler_bag_1", "cooler_bag_25", "cooler_bag_50":
 				Game.multipliers["businesses"]["cooler_bag"] *= 2.0;
-
-
-func _on_button_pressed():
-	pass
+	elif id.begins_with('van'):
+		match id:
+			_:
+				print("I am an Ice cream van upgrade");
 
 
 func _on_clicked():
