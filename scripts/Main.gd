@@ -170,12 +170,20 @@ func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 	print(id);
 	if id.begins_with('cooler_bag'):
 		match id:
-			"cooler_bag_1", "cooler_bag_25", "cooler_bag_50":
+			_:
 				Game.multipliers["businesses"]["cooler_bag"] *= 2.0;
+	elif id.begins_with('cart'):
+		match id:
+			_:
+				Game.multipliers['businesses']['cart'] *= 2.0;
 	elif id.begins_with('van'):
 		match id:
 			_:
-				print("I am an Ice cream van upgrade");
+				Game.multipliers['businesses']['van'] *= 2.0;
+	elif id.begins_with('parlor'):
+		match id:
+			_:
+				Game.multipliers['businesses']['van'] *= 2.0;
 
 
 func _on_flavour_purchased(f: Flavour):
