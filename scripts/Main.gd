@@ -35,7 +35,8 @@ var current_view: View =-1:
 		current_view = value;
 		for i in range(views.size()):
 			if i != value:
-				views[i].visible = false;
+				if not(i == View.MAIN and value == View.FLAVOURS) or true:
+					views[i].visible = false;
 				views[i].process_mode = Node.PROCESS_MODE_DISABLED;
 				# idk how to make it come back though, considering that some input nodes
 				# would need different treatment
