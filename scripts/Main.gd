@@ -167,7 +167,7 @@ func _on_business_purchased(business: Business, amount: int):
 
 func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 	var id : String = upgrade["short_name"];
-	print(id);
+	Game.purchase_upgrade(upgrade);
 	if id.begins_with('cooler_bag'):
 		match id:
 			_:

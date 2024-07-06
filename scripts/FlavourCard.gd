@@ -18,6 +18,7 @@ var flavour: Flavour;
 				pass
 			elif value == FlavourState.PURCHASED:
 				$HBoxContainer/Button.text = 'Purchased!';
+			state = value;
 
 
 func _ready():

@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://i15pl33k6qwe"]
+[gd_scene load_steps=6 format=3 uid="uid://i15pl33k6qwe"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_exypd"]
 [ext_resource type="PackedScene" uid="uid://oit24pi7quno" path="res://scenes/ClickMe.tscn" id="2_e5n4g"]
 [ext_resource type="PackedScene" uid="uid://bclyrbh0ul0f7" path="res://scenes/NewsTicker.tscn" id="3_4r544"]
 [ext_resource type="PackedScene" uid="uid://bet7oy137py8u" path="res://scenes/flavour_menu_test.tscn" id="4_w4ttl"]
+
+[sub_resource type="GDScript" id="GDScript_aehi6"]
+script/source = "extends SpinBox
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	value_changed.connect(func(val: float): Game.base_click_production = val);
+"
 
 [node name="Main" type="Node"]
 script = ExtResource("1_exypd")
@@ -75,6 +84,14 @@ text = "Tech Tree"
 
 [node name="TechShortcuts" type="HFlowContainer" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
 layout_mode = 2
+
+[node name="SpinBox" type="SpinBox" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 9.22337e+18
+value = 1.0
+rounded = true
+script = SubResource("GDScript_aehi6")
 
 [node name="BusinessList" type="PanelContainer" parent="MainGUI/ThreeContainer"]
 custom_minimum_size = Vector2(320, 0)

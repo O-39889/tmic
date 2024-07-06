@@ -23,7 +23,7 @@ var flavours_arr := [];
 var purchased_flavours := [];
 
 var upgrades := {};
-
+var purchased_upgrades := [];
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,10 +31,12 @@ func _ready():
 	# at around 40k or so maybe could put the next business but that's without any flavours and upgrades
 	print("Game autoload loaded");
 	for i in range(BUSINESSES_INFO.size()):
+		# New upgrades are created in BUSINESS CLASS ITSELF
+		# PLEASE KEEP THAT IN MIND
 		var b := Business.new(i, BUSINESSES_INFO[i]);
 		bs_arr.append(b);
 		bs_dict[b.short_name] = b;
-		upgrades[b.short_name] = {};
+		upgrades[b.short_name] = b.upgrades.duplicate();
 	var vanilla_entry : Dictionary = FLAVOURS_INFO[0]
 	var vanilla_flavour := Flavour.new(0, vanilla_entry);
 	vanilla_flavour.purchased = true;
@@ -79,3 +81,18 @@ func purchase_flavour(f: Flavour):
 		false  
 	), f);
 	multipliers['flavours'] *= 1.0 + f.bonus;
+
+
+func purchase_upgrade(u: Upgrade):
+	assert(not u.purchased, 'This upgrade ' + u.short_name + ' is already purchased');
+	u.purchased = true;
+	
+	Game.counter -= u.price;
+	purchased_upgrades.insert(purchased_upgrades.bsearch_custom(
+		u, func(a: Upgrade, b: Upgrade):
+			# prolly???
+			if a.business.id < b.business.id:
+				return true;
+			return a.id < b.id,
+			false
+	), u);
