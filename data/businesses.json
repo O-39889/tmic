@@ -74,7 +74,7 @@
 		"name": "parlor",
 		"full_name": "Ice cream parlor",
 		"description": "A specialized store selling different kinds of ice cream.",
-		"initial_price": 40000,
+		"initial_price": 1800,
 		"multiplier": 1.125,
 		"initial_production": 600,
 		"upgrades": [],
