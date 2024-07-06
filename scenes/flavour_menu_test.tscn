@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://bet7oy137py8u"]
+[gd_scene load_steps=3 format=3 uid="uid://bet7oy137py8u"]
 
 [ext_resource type="Script" path="res://scripts/flavour_menu.gd" id="1_i3ewc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wbpc7"]
+font_size = 24
 
 [node name="FlavourMenuTest" type="PanelContainer"]
 custom_minimum_size = Vector2(1280, 720)
@@ -17,6 +20,14 @@ script = ExtResource("1_i3ewc")
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 2
 alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "This is the total multiplier given by all your purchased flavours. The flavour multipliers stack multiplicatively with each other and with other multipliers."
+text = "Total multiplier: x1"
+label_settings = SubResource("LabelSettings_wbpc7")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Spacer" type="HSeparator" parent="VBoxContainer"]
 layout_mode = 2

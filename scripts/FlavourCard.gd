@@ -1,7 +1,23 @@
 class_name FlavourCard extends PanelContainer;
 
 
+# like this fur now
+enum FlavourState {
+	UNLOCKED,
+	PURCHASED,
+};
+
+
 var flavour: Flavour;
+@onready var state : FlavourState = (FlavourState.PURCHASED
+	if flavour.purchased else FlavourState.UNLOCKED):
+		get:
+			return state;
+		set(value):
+			if value == FlavourState.UNLOCKED:
+				pass
+			elif value == FlavourState.PURCHASED:
+				$HBoxContainer/Button.text = 'Purchased!';
 
 
 func _ready():
@@ -17,5 +33,11 @@ func _ready():
 
 
 func _process(delta):
-	$HBoxContainer/Button.disabled = (flavour.price < Game.counter
-		or flavour.purchased);
+	$HBoxContainer/Button.disabled = (flavour.price > Game.counter
+		or state == FlavourState.PURCHASED);
+
+
+func _on_button_pressed():
+	if Game.counter >= flavour.price:
+		state = FlavourState.PURCHASED;
+		EventBus.flavour_purchased.emit(flavour);

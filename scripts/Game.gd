@@ -72,5 +72,10 @@ func get_click_production():
 func purchase_flavour(f: Flavour):
 	assert(not f.purchased, 'This flavour ' + f.short_name + ' is already purrchased');
 	f.purchased = true;
+	Game.counter -= f.price;
 	# ???
-	purchased_flavours.insert(purchased_flavours.bsearch(f, false), f);
+	purchased_flavours.insert(purchased_flavours.bsearch_custom(
+		f, func(arr_item: Flavour, needle: Flavour): return arr_item.id < needle.id,
+		false  
+	), f);
+	multipliers['flavours'] *= 1.0 + f.bonus;

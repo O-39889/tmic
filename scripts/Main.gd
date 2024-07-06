@@ -31,6 +31,7 @@ var business_nodes: Dictionary;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Main scene loaded");
+	Game.counter = 601;
 	clickme.clicked.connect(_on_clicked);
 	get_window().min_size = Vector2i(1024, 768);
 	# no!! should actually only add the unlocked ones
@@ -44,6 +45,7 @@ func _ready():
 		previous = b_node;
 	EventBus.business_purchased.connect(_on_business_purchased);
 	EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
+	EventBus.flavour_purchased.connect(_on_flavour_purchased);
 
 
 # for updating UI stuff (counters etc)
@@ -127,6 +129,11 @@ func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 		match id:
 			_:
 				print("I am an Ice cream van upgrade");
+
+
+func _on_flavour_purchased(f: Flavour):
+	print(f.full_name);
+	Game.purchase_flavour(f);
 
 
 func _on_clicked():
