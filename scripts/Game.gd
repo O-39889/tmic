@@ -18,8 +18,12 @@ var ips : float = 0;
 
 var multipliers := {};
 
-var flavours := {};
+var flavours_dict := {};
+var flavours_arr := [];
+var purchased_flavours := [];
+
 var upgrades := {};
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,9 +35,17 @@ func _ready():
 		bs_arr.append(b);
 		bs_dict[b.short_name] = b;
 		upgrades[b.short_name] = {};
-	var vanilla_flavour : Dictionary = FLAVOURS_INFO[0];
-	flavours[vanilla_flavour["short_name"]] = vanilla_flavour;
-	multipliers["flavours"] = vanilla_flavour["bonus"];
+	var vanilla_entry : Dictionary = FLAVOURS_INFO[0]
+	var vanilla_flavour := Flavour.new(0, vanilla_entry);
+	vanilla_flavour.purchased = true;
+	flavours_dict[vanilla_flavour.short_name] = vanilla_flavour;
+	flavours_arr = [vanilla_flavour];
+	purchased_flavours = [vanilla_flavour];
+	multipliers["flavours"] = 1.0;
+	for i in range(1, FLAVOURS_INFO.size()):
+		var f : Flavour = Flavour.new(i, FLAVOURS_INFO[i]);
+		flavours_dict[f.short_name] = f;
+		flavours_arr.append(f);
 	
 	multipliers["businesses"] = {};
 	for b in bs_arr:
@@ -55,3 +67,10 @@ func get_click_production():
 				# type) but I'm not exactly sure
 				click_production += 0.1 * (bs_dict[short_name].count / pow(bs_dict[short_name].id + 1, 3));
 	return click_production;
+
+
+func purchase_flavour(f: Flavour):
+	assert(not f.purchased, 'This flavour ' + f.short_name + ' is already purrchased');
+	f.purchased = true;
+	# ???
+	purchased_flavours.insert(purchased_flavours.bsearch(f, false), f);

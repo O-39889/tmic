@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://chdpimdwmayyf"]
+
+[ext_resource type="Script" path="res://scripts/FlavourCard.gd" id="1_hbhpx"]
+
+[node name="FlavourCard" type="PanelContainer"]
+custom_minimum_size = Vector2(250, 100)
+offset_right = 94.0
+offset_bottom = 50.0
+script = ExtResource("1_hbhpx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="FlavourName" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Price" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Buy me!!!!!"

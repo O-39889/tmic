@@ -42,8 +42,8 @@ func _ready():
 		businesses_list.add_child(b_node);
 		business_nodes[b.short_name] = b_node;
 		previous = b_node;
-		EventBus.business_purchased.connect(_on_business_purchased);
-		EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
+	EventBus.business_purchased.connect(_on_business_purchased);
+	EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
 
 
 # for updating UI stuff (counters etc)
@@ -131,3 +131,20 @@ func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 
 func _on_clicked():
 	handle_click();
+
+
+func _on_flavours_btn_pressed():
+	# don't ask
+	var screen_size : Vector2 = (func():
+		for c in get_children():
+			if c is CanvasItem:
+				return c.get_viewport_rect().size;).call();
+	var popup : PopupPanel = PopupPanel.new();
+	#popup.transient = true;
+	#popup.exclusive = true;
+	# popup.visible = true;
+	popup.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN;
+	popup.size = screen_size;
+	popup.popup();
+	popup.add_child(load("res://scenes/flavour_menu_test.tscn").instantiate());
+	add_child(popup);

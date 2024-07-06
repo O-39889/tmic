@@ -68,7 +68,7 @@ func update():
 	else:
 		b_count.text = str(business.count);
 		b_name.text = business.full_name;
-	b_price.text = Globals.format_num(business.price);
+	b_price.text = '$' + Globals.format_num(business.price);
 	b_utton.disabled = business.price > Game.counter;
 
 
@@ -96,6 +96,7 @@ func _process(delta):
 	update();
 
 
-func get_tooltip_node() -> Control:
+func get_tooltip_node():
 	# generate the node
+	# seems like not lmao
 	return null;

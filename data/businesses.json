@@ -37,8 +37,8 @@
 		"name": "cart",
 		"full_name": "Ice cream cart",
 		"description": "Even though its wheels actually don't even work, it still can add to the atmosphere of a wedding or any other celebration.",
-		"initial_price": 100,
-		"multiplier": 1.1,
+		"initial_price": 50,
+		"multiplier": 1.125,
 		"initial_production": 3,
 		"upgrades":
 			[
@@ -46,7 +46,7 @@
 				"short_name": "cart_1",
 				"full_name": "Wider sunshade",
 				"effect": "Ice cream cart production is **doubled**.",
-				"description": "To protect the seller. What? They can't just eat the ice cream! Have you never heard of the main ice cream business rule? Never try your own product!.. without paying for it out of your pocket.",
+				"description": "To protect the seller. Only the ice cream gets the premium-grade climate control.",
 				"price": 1000,
 				"required": 1,
 				},
