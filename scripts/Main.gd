@@ -12,8 +12,6 @@ enum View {
 };
 
 
-
-
 const COUNTER_UPDATE_FASTEST : float = 1.0 / 15.0;
 const COUNTER_UPDATE_FRAMERULE : float = 0.35; # hehe
 const COUNTER_UPDATE_SLOW : float = 0.7;
