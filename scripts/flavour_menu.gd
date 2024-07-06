@@ -5,12 +5,15 @@ static var card_packed : PackedScene = preload("res://scenes/FlavourCard.tscn");
 
 var unlocked_flavours : Array;
 
-@onready var flavour_list := $VBoxContainer/ScrollContainer/FlavourList;
+@onready var flavour_list : VBoxContainer = $VBoxContainer/ScrollContainer/FlavourList;
+@onready var exit_button : Button = $VBoxContainer/ExitBtn;
+@onready var bank_counter = $VBoxContainer/BankCounter;
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	EventBus.update_framerule.connect(_update_flavour_list);
+	EventBus.update_fastest.connect(_update_counter);
 	for f in Game.flavours_arr.filter(func(f : Flavour):
 			return Game.counter_all_time >= f.unlocked_at):
 		add_flavour(f);
@@ -23,9 +26,9 @@ func add_flavour(f: Flavour):
 	flavour_list.add_child(card);
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func force_update():
+	_update_flavour_list();
+	_update_counter();
 
 
 func _update_flavour_list():
@@ -35,3 +38,7 @@ func _update_flavour_list():
 	$VBoxContainer/Label.text = 'Total multiplier: x' + Globals.format_num(
 		Game.multipliers['flavours'], 3
 	);
+
+
+func _update_counter():
+	bank_counter.text = 'You have: ' + Globals.format_num(Game.counter);
