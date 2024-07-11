@@ -71,7 +71,6 @@ var business_nodes: Dictionary;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("Main scene loaded");
-	Game.counter = 601;
 	current_view = View.MAIN;
 	clickme.clicked.connect(_on_clicked);
 	get_window().min_size = Vector2i(1024, 768);
