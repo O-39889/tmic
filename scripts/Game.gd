@@ -1,4 +1,4 @@
-extends Node
+extends Node;
 
 # can't make this const sadge
 @onready var BUSINESSES_INFO : Array = ResourceLoader.load("res://data/businesses.json").data;
@@ -25,9 +25,22 @@ var purchased_flavours := [];
 var upgrades := {};
 var purchased_upgrades := [];
 
+## Should be loaded in by SaveLoadManager before _ready() in this node.
+## Used afterwards as well.
+var savedata : SaveData = null;
+
+
+func _enter_tree():
+	print('Game autoload entering tree');
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if savedata:
+		print(savedata);
+		print(savedata.current_run_started);
+	else:
+		print('No savedata loaded');
 	# at around 40k or so maybe could put the next business but that's without any flavours and upgrades
 	print("Game autoload loaded");
 	for i in range(BUSINESSES_INFO.size()):

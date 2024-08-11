@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://i15pl33k6qwe"]
+[gd_scene load_steps=5 format=3 uid="uid://i15pl33k6qwe"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_exypd"]
 [ext_resource type="PackedScene" uid="uid://b6c8ipv4gnn" path="res://scenes/main_gui.tscn" id="2_gpgq0"]
-[ext_resource type="Script" path="res://scripts/main_gui.gd" id="3_gkgbo"]
 [ext_resource type="PackedScene" uid="uid://bet7oy137py8u" path="res://scenes/flavour_menu_test.tscn" id="4_w4ttl"]
 [ext_resource type="PackedScene" uid="uid://c6e5qq5r26ot6" path="res://scenes/techs/tech_tree_menu.tscn" id="5_8t61d"]
 
@@ -11,7 +10,6 @@ script = ExtResource("1_exypd")
 
 [node name="MainGUI" parent="." instance=ExtResource("2_gpgq0")]
 unique_name_in_owner = true
-script = ExtResource("3_gkgbo")
 
 [node name="FlavourMenu" parent="." instance=ExtResource("4_w4ttl")]
 unique_name_in_owner = true

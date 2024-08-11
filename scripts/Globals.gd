@@ -1,16 +1,16 @@
-extends Node
+class_name Globals extends Object;
 
 # premature optimisation speedrun any%
 const LOG_1000 : float = log(1000);
 
-@onready var number_names : PackedStringArray = get_number_names();
+static var number_names : PackedStringArray = get_number_names();
 
 
-func _ready():
-	print("Globals autoload loaded");
+static func _static_init():
+	print('Globals statically initialized');
 
 
-func add_thousands_separator(num: float, sep: String = ',', decimals: int = 0) -> String:
+static func add_thousands_separator(num: float, sep: String = ',', decimals: int = 0) -> String:
 	var s := beautify(num, decimals);
 	# number less than 1000 won't need thousand seps
 	if num < 1000:
@@ -26,13 +26,13 @@ func add_thousands_separator(num: float, sep: String = ',', decimals: int = 0) -
 		return split[0] + '.' + split[1];
 
 
-func beautify(num: float, decimals: int = 3) -> String:
+static func beautify(num: float, decimals: int = 3) -> String:
 	# ?????
 	return String.num(num, decimals);
 
 
 # decimals is for non-integer values less than 1 million
-func format_num(num: float, decimals: int = 0) -> String:
+static func format_num(num: float, decimals: int = 0) -> String:
 	if is_inf(num):
 		return "Infinity";
 	if is_nan(num):
@@ -46,7 +46,7 @@ func format_num(num: float, decimals: int = 0) -> String:
 	return str(beautify(num / pow(1000, log_int))) + " " + number_name;
 
 
-func get_number_names() -> PackedStringArray:
+static func get_number_names() -> PackedStringArray:
 	var names : PackedStringArray = [
 		"million", "billion", "trillion", "quadrilion", "quintillion",
 		"sextillion", "septillion", "octillion", "nonillion",

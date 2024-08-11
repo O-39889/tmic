@@ -22,12 +22,37 @@ const CLICK_LABEL_PACKED := preload("res://scenes/FloatingLabel.tscn");
 
 @onready var click_labels : Array[FloatingLabel] = [];
 
+@onready var test_btn : Button = (func():
+		var btn = %ResetBtn2;
+		btn.pressed.connect(func():
+			var savedata = SaveData.default();
+			savedata.ic_in_bank = 1.11200094012380e269;
+			print(JSON.stringify(savedata.to_dict()));	
+		);
+		return btn;
+		).call()
+
 
 func _ready():
 	clickme.clicked.connect(_on_clickme_clickmed);
 	EventBus.update_fastest.connect(update_bank);
 	EventBus.update_fastest.connect(update_ips);
 	EventBus.update_slow.connect(update_prestige);
+	
+	%SaveBtnTest.pressed.connect(func():
+		var save_dialog := FileDialog.new();
+		save_dialog.file_selected.connect(func(path: String):
+			print(path)
+			var file = FileAccess.open(path, FileAccess.WRITE_READ);
+			print(file);
+			file.store_double(Game.counter);
+			print(FileAccess.get_open_error());
+			);
+		save_dialog.access = FileDialog.ACCESS_USERDATA;
+		get_parent().add_child(save_dialog);
+		save_dialog.position = get_viewport_rect().size / 2;
+		save_dialog.show();
+		pass);
 
 
 func update_bank():
