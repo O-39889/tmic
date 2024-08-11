@@ -211,3 +211,9 @@ func _on_flavours_btn_pressed():
 	popup.popup();
 	popup.add_child(load("res://scenes/flavour_menu_test.tscn").instantiate());
 	add_child(popup);
+
+
+func _input(event: InputEvent):
+	if event.is_action_pressed('ui_cancel'):
+		if current_view != View.MAIN:
+			current_view = View.MAIN;	
