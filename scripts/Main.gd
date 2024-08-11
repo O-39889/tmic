@@ -18,7 +18,6 @@ var framerule_tick : float = 0;
 var slow_tick : float = 0;
 
 const BUSINESS_PACKED := preload("res://scenes/Business.tscn");
-const CLICK_LABEL_PACKED := preload("res://scenes/FloatingLabel.tscn");
 
 
 var current_view: View = View.MAIN:
@@ -65,7 +64,7 @@ var business_nodes: Dictionary;
 func _ready():
 	print("Main scene loaded");
 	current_view = View.MAIN;
-	clickme.clicked.connect(_on_clicked);
+	clickme.clicked.connect(_on_clickmed);
 	get_window().min_size = Vector2i(1024, 768);
 	# no!! should actually only add the unlocked ones
 	var previous : Control = null;
@@ -94,8 +93,6 @@ func _process(delta):
 	slow_tick += delta;
 	if fastest_tick >= COUNTER_UPDATE_FASTEST:
 		fastest_tick = 0.0;
-		update_counter();
-		update_ips();
 		EventBus.update_fastest.emit();
 	if framerule_tick >= COUNTER_UPDATE_FRAMERULE:
 		framerule_tick = 0.0;
@@ -127,27 +124,11 @@ func _physics_process(delta):
 			Game.counter_all_time += produced;
 			Game.counter += produced;
 	Game.ips = ips / delta;
-	update_ips();
 
 
-func update_counter():
-	bank_counter.text = Globals.format_num(floorf(Game.counter));
-
-
-func update_ips():
-	ips_counter.text = 'per second: ' + Globals.format_num(Game.ips, 2);
-
-
-func handle_click():
-	var produced : float = Game.get_click_production();
-	Game.counter_all_time += produced;
-	Game.counter += produced;
-	update_counter();
-	var pos := get_viewport().get_mouse_position();
-	var label := CLICK_LABEL_PACKED.instantiate();
-	label.text = Globals.format_num(produced);
-	label.position = pos - Vector2(0, 25);
-	add_child(label);
+func handle_click(amount: float):
+	Game.counter_all_time += amount;
+	Game.counter += amount;
 
 
 func _on_business_purchased(business: Business, amount: int):
@@ -163,6 +144,7 @@ func _on_business_purchased(business: Business, amount: int):
 func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 	var id : String = upgrade["short_name"];
 	Game.purchase_upgrade(upgrade);
+	# how about we just move all that out of the way into the Game script
 	if id.begins_with('cooler_bag'):
 		match id:
 			_:
@@ -186,8 +168,8 @@ func _on_flavour_purchased(f: Flavour):
 	Game.purchase_flavour(f);
 
 
-func _on_clicked():
-	handle_click();
+func _on_clickmed(amount: float):
+	handle_click(amount);
 
 
 func _on_update_slow():
@@ -218,3 +200,9 @@ func _input(event: InputEvent):
 	if event.is_action_pressed('ui_cancel'):
 		if current_view != View.MAIN:
 			current_view = View.MAIN;
+	if event.is_action_pressed('f_1'):
+		if current_view == View.MAIN:
+			current_view = View.FLAVOURS;
+	if event.is_action_pressed('f_2'):
+		if current_view == View.MAIN:
+			current_view = View.TECHS;

@@ -1,4 +1,4 @@
-extends Label
+class_name FloatingLabel extends Label;
 
 const SPEED = 42.6969696969696969;
 const FADE_TIME = 3;
