@@ -86,7 +86,6 @@ func purchase_flavour(f: Flavour):
 func purchase_upgrade(u: Upgrade):
 	assert(not u.purchased, 'This upgrade ' + u.short_name + ' is already purchased');
 	u.purchased = true;
-	
 	Game.counter -= u.price;
 	purchased_upgrades.insert(purchased_upgrades.bsearch_custom(
 		u, func(a: Upgrade, b: Upgrade):

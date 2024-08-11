@@ -1,0 +1,161 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6c8ipv4gnn"]
+
+[ext_resource type="PackedScene" uid="uid://oit24pi7quno" path="res://scenes/ClickMe.tscn" id="1_euaed"]
+[ext_resource type="PackedScene" uid="uid://bclyrbh0ul0f7" path="res://scenes/NewsTicker.tscn" id="2_3nm4n"]
+
+[node name="MainGUI" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ThreeContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Leftmost" type="PanelContainer" parent="ThreeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ThreeContainer/Leftmost"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ThreeContainer/Leftmost/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="OptionsBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " Options"
+
+[node name="StatsBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Stats"
+
+[node name="Spacer" type="Control" parent="ThreeContainer/Leftmost/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="ThreeContainer/Leftmost/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ResetBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reset"
+
+[node name="HSeparator" type="HSeparator" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+
+[node name="FlavoursBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Menu"
+
+[node name="HSeparator2" type="HSeparator" parent="ThreeContainer/Leftmost/VBoxContainer"]
+layout_mode = 2
+
+[node name="TechsBtn" type="Button" parent="ThreeContainer/Leftmost/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tech Tree"
+
+[node name="TechShortcuts" type="HFlowContainer" parent="ThreeContainer/Leftmost/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BusinessList" type="PanelContainer" parent="ThreeContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="ThreeContainer/BusinessList"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ThreeContainer/BusinessList/MarginContainer"]
+clip_contents = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="BusinessesList" type="VBoxContainer" parent="ThreeContainer/BusinessList/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 150)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Rightmost" type="VBoxContainer" parent="ThreeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ThreeContainer/Rightmost"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="ThreeContainer/Rightmost/VBoxContainer"]
+layout_mode = 2
+
+[node name="BoxContainer" type="VBoxContainer" parent="ThreeContainer/Rightmost/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="BankCounter" type="Label" parent="ThreeContainer/Rightmost/VBoxContainer/PanelContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "0"
+horizontal_alignment = 2
+
+[node name="IpsCounter" type="Label" parent="ThreeContainer/Rightmost/VBoxContainer/PanelContainer/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "per second:"
+horizontal_alignment = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ThreeContainer/Rightmost/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="ClickMe" parent="ThreeContainer/Rightmost/VBoxContainer/MarginContainer" instance=ExtResource("1_euaed")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="ThreeContainer/Rightmost/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="BoxContainer" type="VBoxContainer" parent="ThreeContainer/Rightmost/VBoxContainer/MarginContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="PrestigeCounterMaybe" type="Label" parent="ThreeContainer/Rightmost/VBoxContainer/MarginContainer/PanelContainer2/BoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Prestige: 0"
+horizontal_alignment = 2
+
+[node name="NewsTicker" parent="." instance=ExtResource("2_3nm4n")]
+layout_mode = 2

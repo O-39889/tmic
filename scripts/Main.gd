@@ -1,8 +1,4 @@
-extends Node
-
-
-signal timer_framerule;
-signal timer_slow;
+class_name Main extends Node;
 
 
 enum View {
@@ -12,55 +8,52 @@ enum View {
 };
 
 
-const COUNTER_UPDATE_FASTEST : float = 1.0 / 15.0;
+@onready var COUNTER_UPDATE_FASTEST : float = 1.0 / (Engine.physics_ticks_per_second / 2.0);
 const COUNTER_UPDATE_FRAMERULE : float = 0.35; # hehe
 const COUNTER_UPDATE_SLOW : float = 0.7;
 
+# counterss, will update in _process()
 var fastest_tick : float = 0;
 var framerule_tick : float = 0;
 var slow_tick : float = 0;
 
-@onready var FPS : int = Engine.physics_ticks_per_second;
-
-static var b_control := preload("res://scenes/Business.tscn");
-static var click_label := preload("res://scenes/FloatingLabel.tscn");
+const BUSINESS_PACKED := preload("res://scenes/Business.tscn");
+const CLICK_LABEL_PACKED := preload("res://scenes/FloatingLabel.tscn");
 
 
-var current_view: View =-1:
+var current_view: View = View.MAIN:
 	get:
 		return current_view;
 	set(value):
+		#print('Setting current view from ', views[current_view], ' to ', views[value]);
 		if value == current_view:
-			return;
+			pass; # we don't return just in case we somehow didn't update it earlier
+			# actually that one was for initial setting heheheha
 		current_view = value;
-		for i in range(views.size()):
-			if i != value:
-				if not(i == View.MAIN and value == View.FLAVOURS) or true:
-					views[i].visible = false;
-				views[i].process_mode = Node.PROCESS_MODE_DISABLED;
-				# idk how to make it come back though, considering that some input nodes
-				# would need different treatment
-				# seems like setting process_mode to disabled stops input
-				# events though????
-				# views[i].propagate_call('set_mouse_filter', [Control.MOUSE_FILTER_IGNORE]);
+		for key in views:
+			if key != value:
+				if views[key].has_method('hide_menu'):
+					views[key].hide_menu();
 			else:
-				views[i].visible = true;
-				views[i].process_mode = Node.PROCESS_MODE_INHERIT;
-		match value:
-			View.MAIN:
-				pass;
-			View.FLAVOURS:
-				views[value].force_update();
-			View.TECHS:
-				pass;
+				if views[key].has_method('show_menu'):
+					views[key].show_menu();
 
 
-@onready var businesses_list := find_child("BusinessesList");
-@onready var bank_counter := find_child("BankCounter")
-@onready var ips_counter := find_child("IpsCounter");
-@onready var clickme := find_child("ClickMe");
+@onready var main : MainGui = %MainGUI;
+@onready var flavour_menu : FlavourMenu = %FlavourMenu;
+@onready var tech_tree_menu : TechTreeMenu = %TechTreeMenu;
 
-@onready var views : Array[Node] = get_children();
+@onready var businesses_list := main.business_list;
+@onready var bank_counter := main.bank_counter;
+@onready var ips_counter := main.ips_counter;
+@onready var clickme : Clickme = main.clickme;
+
+# probably won't need this anymore
+@onready var views : Dictionary = {
+	View.MAIN : main,
+	View.FLAVOURS : flavour_menu,
+	View.TECHS : tech_tree_menu,
+};
 
 @onready var bs_arr := Game.bs_arr;
 @onready var bs_dict := Game.bs_dict;
@@ -77,7 +70,7 @@ func _ready():
 	# no!! should actually only add the unlocked ones
 	var previous : Control = null;
 	for b in bs_arr:
-		var b_node := b_control.instantiate();
+		var b_node := BUSINESS_PACKED.instantiate();
 		b_node.previous = previous;
 		b_node.business = b;
 		businesses_list.add_child(b_node);
@@ -87,7 +80,9 @@ func _ready():
 	EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
 	EventBus.flavour_purchased.connect(_on_flavour_purchased);
 	#$MainGUI.process_mode = Node.PROCESS_MODE_DISABLED;
-	views[View.FLAVOURS].exit_button.pressed.connect(func(): current_view = View.MAIN );
+	main.flavours_btn.pressed.connect(func(): current_view = View.FLAVOURS);
+	main.techs_btn.pressed.connect(func(): current_view = View.TECHS);
+	flavour_menu.exit_button.pressed.connect(func(): current_view = View.MAIN);
 
 
 # for updating UI stuff (counters etc)
@@ -95,18 +90,16 @@ func _process(delta):
 	fastest_tick += delta;
 	framerule_tick += delta;
 	if fastest_tick >= COUNTER_UPDATE_FASTEST:
-		fastest_tick = 0;
+		fastest_tick = 0.0;
 		update_counter();
 		update_ips();
 		EventBus.update_fastest.emit();
 	if framerule_tick >= COUNTER_UPDATE_FRAMERULE:
-		framerule_tick = 0;
-		timer_framerule.emit();
+		framerule_tick = 0.0;
 		EventBus.update_framerule.emit();
 	if slow_tick >= COUNTER_UPDATE_SLOW:
-		slow_tick = 0;
+		slow_tick = 0.0;
 		EventBus.update_slow.emit();
-	pass
 
 
 # for updating game logic stuff (production etc)
@@ -148,7 +141,7 @@ func handle_click():
 	Game.counter += produced;
 	update_counter();
 	var pos := get_viewport().get_mouse_position();
-	var label := click_label.instantiate();
+	var label := CLICK_LABEL_PACKED.instantiate();
 	label.text = Globals.format_num(produced);
 	label.position = pos - Vector2(0, 25);
 	add_child(label);
@@ -216,4 +209,4 @@ func _on_flavours_btn_pressed():
 func _input(event: InputEvent):
 	if event.is_action_pressed('ui_cancel'):
 		if current_view != View.MAIN:
-			current_view = View.MAIN;	
+			current_view = View.MAIN;

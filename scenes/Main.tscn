@@ -1,177 +1,24 @@
 [gd_scene load_steps=6 format=3 uid="uid://i15pl33k6qwe"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_exypd"]
-[ext_resource type="PackedScene" uid="uid://oit24pi7quno" path="res://scenes/ClickMe.tscn" id="2_e5n4g"]
-[ext_resource type="PackedScene" uid="uid://bclyrbh0ul0f7" path="res://scenes/NewsTicker.tscn" id="3_4r544"]
+[ext_resource type="PackedScene" uid="uid://b6c8ipv4gnn" path="res://scenes/main_gui.tscn" id="2_gpgq0"]
+[ext_resource type="Script" path="res://scripts/main_gui.gd" id="3_gkgbo"]
 [ext_resource type="PackedScene" uid="uid://bet7oy137py8u" path="res://scenes/flavour_menu_test.tscn" id="4_w4ttl"]
-
-[sub_resource type="GDScript" id="GDScript_aehi6"]
-script/source = "extends SpinBox
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	value_changed.connect(func(val: float): Game.base_click_production = val);
-"
+[ext_resource type="PackedScene" uid="uid://c6e5qq5r26ot6" path="res://scenes/techs/tech_tree_menu.tscn" id="5_8t61d"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_exypd")
 
-[node name="MainGUI" type="VBoxContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
+[node name="MainGUI" parent="." instance=ExtResource("2_gpgq0")]
+unique_name_in_owner = true
+script = ExtResource("3_gkgbo")
 
-[node name="ThreeContainer" type="HBoxContainer" parent="MainGUI"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="Leftmost" type="PanelContainer" parent="MainGUI/ThreeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainGUI/ThreeContainer/Leftmost"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-
-[node name="OptionsBtn" type="Button" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = " Options"
-
-[node name="StatsBtn" type="Button" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "Stats"
-
-[node name="Spacer" type="Control" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.5
-
-[node name="ResetBtn" type="Button" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Reset"
-
-[node name="HSeparator" type="HSeparator" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-
-[node name="FlavoursBtn" type="Button" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-text = "Menu"
-
-[node name="HSeparator2" type="HSeparator" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-
-[node name="TechsBtn" type="Button" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-text = "Tech Tree"
-
-[node name="TechShortcuts" type="HFlowContainer" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-
-[node name="SpinBox" type="SpinBox" parent="MainGUI/ThreeContainer/Leftmost/VBoxContainer"]
-layout_mode = 2
-min_value = 1.0
-max_value = 9.22337e+18
-value = 1.0
-rounded = true
-script = SubResource("GDScript_aehi6")
-
-[node name="BusinessList" type="PanelContainer" parent="MainGUI/ThreeContainer"]
-custom_minimum_size = Vector2(320, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="MainGUI/ThreeContainer/BusinessList"]
-layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MainGUI/ThreeContainer/BusinessList/MarginContainer"]
-clip_contents = false
-layout_mode = 2
-horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
-
-[node name="BusinessesList" type="VBoxContainer" parent="MainGUI/ThreeContainer/BusinessList/MarginContainer/ScrollContainer"]
-custom_minimum_size = Vector2(320, 150)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Rightmost" type="VBoxContainer" parent="MainGUI/ThreeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MainGUI/ThreeContainer/Rightmost"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="PanelContainer" type="PanelContainer" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer"]
-layout_mode = 2
-
-[node name="BoxContainer" type="VBoxContainer" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="BankCounter" type="Label" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/PanelContainer/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "0"
-horizontal_alignment = 2
-
-[node name="IpsCounter" type="Label" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/PanelContainer/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "per second:"
-horizontal_alignment = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
-
-[node name="ClickMe" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/MarginContainer" instance=ExtResource("2_e5n4g")]
-layout_mode = 2
-
-[node name="PanelContainer2" type="PanelContainer" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-
-[node name="BoxContainer" type="VBoxContainer" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/MarginContainer/PanelContainer2"]
-layout_mode = 2
-
-[node name="PrestigeCounterMaybe" type="Label" parent="MainGUI/ThreeContainer/Rightmost/VBoxContainer/MarginContainer/PanelContainer2/BoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-text = "0"
-horizontal_alignment = 2
-
-[node name="NewsTicker" parent="MainGUI" instance=ExtResource("3_4r544")]
-layout_mode = 2
-
-[node name="FlavourMenuTest" parent="." instance=ExtResource("4_w4ttl")]
+[node name="FlavourMenu" parent="." instance=ExtResource("4_w4ttl")]
+unique_name_in_owner = true
+process_mode = 4
 visible = false
 
-[connection signal="pressed" from="MainGUI/ThreeContainer/Leftmost/VBoxContainer/FlavoursBtn" to="." method="_on_flavours_btn_pressed"]
+[node name="TechTreeMenu" parent="." instance=ExtResource("5_8t61d")]
+unique_name_in_owner = true
+process_mode = 4
+visible = false

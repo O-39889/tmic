@@ -52,3 +52,5 @@ offset_top = -8.0
 offset_right = 3064.0
 offset_bottom = 2040.0
 border_width = 5.0
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

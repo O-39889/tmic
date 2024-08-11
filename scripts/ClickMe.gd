@@ -1,4 +1,4 @@
-extends CenterContainer
+class_name Clickme extends CenterContainer;
 
 
 signal clicked;

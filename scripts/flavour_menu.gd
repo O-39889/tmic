@@ -1,4 +1,4 @@
-extends PanelContainer;
+class_name FlavourMenu extends PanelContainer;
 
 
 static var card_packed : PackedScene = preload("res://scenes/FlavourCard.tscn");
@@ -24,6 +24,18 @@ func add_flavour(f: Flavour):
 	var card : FlavourCard = card_packed.instantiate();
 	card.flavour = f;
 	flavour_list.add_child(card);
+
+
+func hide_menu():
+	visible = false;
+	process_mode = Node.PROCESS_MODE_DISABLED;
+
+
+func show_menu():
+	visible = true;
+	process_mode = Node.PROCESS_MODE_INHERIT;
+	_update_flavour_list();
+	_update_counter();
 
 
 func force_update():

@@ -8,7 +8,7 @@ font_size = 33
 [sub_resource type="LabelSettings" id="LabelSettings_wbpc7"]
 font_size = 24
 
-[node name="FlavourMenuTest" type="PanelContainer"]
+[node name="FlavourMenu" type="PanelContainer"]
 custom_minimum_size = Vector2(1280, 720)
 anchors_preset = 15
 anchor_right = 1.0
