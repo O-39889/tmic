@@ -5,12 +5,18 @@
 
 [node name="TechTreeMenu" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_g1437")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+unique_name_in_owner = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+unique_name_in_owner = true
 motion_mirroring = Vector2(512, 512)
 
 [node name="BG" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
@@ -44,6 +50,18 @@ centered = false
 position = Vector2(2048, 1024)
 texture = ExtResource("2_mxqvm")
 centered = false
+
+[node name="Exit" type="Button" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = 10.0
+offset_right = -10.0
+grow_horizontal = 0
+text = "X"
 
 [node name="ReferenceRect" type="ReferenceRect" parent="."]
 layout_mode = 0
