@@ -79,7 +79,9 @@ func _ready():
 	EventBus.business_purchased.connect(_on_business_purchased);
 	EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
 	EventBus.flavour_purchased.connect(_on_flavour_purchased);
-	#$MainGUI.process_mode = Node.PROCESS_MODE_DISABLED;
+	
+	EventBus.update_slow.connect(_on_update_slow);
+	
 	main.flavours_btn.pressed.connect(func(): current_view = View.FLAVOURS);
 	main.techs_btn.pressed.connect(func(): current_view = View.TECHS);
 	flavour_menu.exit_button.pressed.connect(func(): current_view = View.MAIN);
@@ -89,6 +91,7 @@ func _ready():
 func _process(delta):
 	fastest_tick += delta;
 	framerule_tick += delta;
+	slow_tick += delta;
 	if fastest_tick >= COUNTER_UPDATE_FASTEST:
 		fastest_tick = 0.0;
 		update_counter();
@@ -185,6 +188,11 @@ func _on_flavour_purchased(f: Flavour):
 
 func _on_clicked():
 	handle_click();
+
+
+func _on_update_slow():
+	if Game.counter >= 1.0:
+		get_window().title = '[' + Globals.format_num(Game.counter) + ' ice cream] ' + 'TMIC';
 
 
 func _on_flavours_btn_pressed():
