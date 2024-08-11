@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6e5qq5r26ot6"]
+
+[ext_resource type="Script" path="res://scripts/tech_tree_menu.gd" id="1_g1437"]
+[ext_resource type="Texture2D" uid="uid://do8vafyicgew5" path="res://svgs/Microscheme.png" id="2_mxqvm"]
+
+[node name="TechTreeMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_g1437")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(512, 512)
+
+[node name="BG" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color(0.435294, 0.513726, 0.631373, 0.839216)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
+texture = ExtResource("2_mxqvm")
+centered = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
+position = Vector2(1024, 0)
+texture = ExtResource("2_mxqvm")
+centered = false
+
+[node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
+position = Vector2(0, 1024)
+texture = ExtResource("2_mxqvm")
+centered = false
+
+[node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
+position = Vector2(1024, 1024)
+texture = ExtResource("2_mxqvm")
+centered = false
+
+[node name="Sprite2D5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
+position = Vector2(2048, 0)
+texture = ExtResource("2_mxqvm")
+centered = false
+
+[node name="Sprite2D6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
+position = Vector2(2048, 1024)
+texture = ExtResource("2_mxqvm")
+centered = false
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 3064.0
+offset_bottom = 2040.0
+border_width = 5.0
