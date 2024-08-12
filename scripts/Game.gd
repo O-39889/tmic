@@ -95,9 +95,6 @@ func _ready():
 
 
 func load_savedata():
-	savedata.ic_in_bank = 1e2;
-	savedata.flavours.append('pistachio');
-	savedata.businesses['parlor'] = 7;
 	if savedata == null:
 		return;
 	reset_multipliers();
@@ -141,7 +138,37 @@ func load_savedata():
 
 func save_savedata():
 	var save := SaveData.default();
-	return save;
+	save.player_name = savedata.player_name;
+	
+	save.game_started = savedata.game_started;
+	save.current_run_started = savedata.current_run_started;
+	save.last_saved = Time.get_unix_time_from_system();
+	save.amount_of_resets = savedata.amount_of_resets;
+	
+	save.ic_in_bank = counter;
+	save.ic_this_run = counter_all_time;
+	save.ic_all_time = counter_all_time;
+	
+	save.ic_clicked = ic_clicked;
+	save.ic_clicked_all_time = ic_clicked_all_time;
+	save.clicks = clicks;
+	save.clicks_all_time = clicks_all_time;
+	
+	for b : Business in bs_arr:
+		if b.count != 0 or true:
+			save.businesses[b.short_name] = b.count;
+	
+	# upgrades are a PITA
+	
+	for f : Flavour in purchased_flavours:
+		if f.short_name != 'vanilla':
+			save.flavours.append(f.short_name);
+	
+	for t : Tech in purchased_techs:
+		save.techs.append(t.short_name);
+	
+	SaveLoadManager.save_game(save);
+	savedata = save;
 
 
 func get_click_production():

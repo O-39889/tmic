@@ -20,8 +20,22 @@ func _ready():
 		DirAccess.make_dir_recursive_absolute(DEFAULT_AUTOSAVE_DIR);
 
 
-func save_game(to: String):
-	pass
+func save_game(data: SaveData, dir: String = DEFAULT_AUTOSAVE_DIR,
+	filename: String = DEFAULT_AUTOSAVE_FILENAME):
+	var absolute := dir + '/' + filename;
+	if not DirAccess.dir_exists_absolute(dir):
+		print('No directory ', dir, ' exists for saving, creating...');
+		DirAccess.make_dir_absolute(dir);
+	if not FileAccess.file_exists(absolute):
+		print('No file ', absolute, ' exists for saving, creating...');
+	var file = FileAccess.open(absolute, FileAccess.WRITE);
+	var dict := data.to_dict();
+	var json := JSON.stringify(dict);
+	file.store_line(json);
+
+
+func sae_autosave(data: SaveData):
+	save_game(data);
 
 
 func load_game(dir: String = DEFAULT_AUTOSAVE_DIR,

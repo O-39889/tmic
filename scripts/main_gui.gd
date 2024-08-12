@@ -40,6 +40,8 @@ func _ready():
 	EventBus.update_slow.connect(update_prestige);
 	
 	%SaveBtnTest.pressed.connect(func():
+		Game.save_savedata();
+		return
 		var save_dialog := FileDialog.new();
 		save_dialog.file_selected.connect(func(path: String):
 			print(path)

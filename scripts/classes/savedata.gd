@@ -67,7 +67,7 @@ static func from_dict(dict: Dictionary) -> SaveData:
 	if dict.has('game_started'):
 		save.game_started = dict['game_started'];
 	if dict.has('current_run_started'):
-		save.current_run_started = dict['curent_run_started'];
+		save.current_run_started = dict['current_run_started'];
 	if dict.has('last_saved'):
 		save.last_saved = dict['last_saved'];
 	if dict.has('amount_of_resets'):
