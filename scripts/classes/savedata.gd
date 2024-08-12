@@ -109,7 +109,7 @@ func to_dict() -> Dictionary:
 		current_run_started = self.current_run_started,
 		last_saved = self.last_saved,
 		# only used for convenience and doesn't matter when deserializing
-		last_saved_str = Time.get_datetime_string_from_unix_time(self.last_saved),
+		last_saved_str = Time.get_datetime_string_from_unix_time(self.last_saved, true),
 		amount_of_resets = self.amount_of_resets,
 		ic_in_bank = self.ic_in_bank,
 		ic_this_run = self.ic_this_run,

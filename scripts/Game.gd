@@ -53,9 +53,9 @@ func _ready():
 	for i in range(BUSINESSES_INFO.size()):
 		# New upgrades are created in BUSINESS CLASS ITSELF
 		# PLEASE KEEP THAT IN MIND
-		# TODO: start IDs with 1 instead of 0
+		# IDs start from 1 instead of 0 !
 		# the same with upgrades in the business class itself!!!
-		var b := Business.new(i, BUSINESSES_INFO[i]);
+		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
 		bs_arr.append(b);
 		bs_dict[b.short_name] = b;
 		upgrades[b.short_name] = b.upgrades.duplicate();
@@ -68,13 +68,13 @@ func _ready():
 	# initializing flavours
 	var vanilla_entry : Dictionary = FLAVOURS_INFO[0];
 	# TODO: start IDs from 1 instead of 0
-	var vanilla_flavour := Flavour.new(0, vanilla_entry);
+	var vanilla_flavour := Flavour.new(1, vanilla_entry);
 	vanilla_flavour.purchased = true;
 	flavours_dict[vanilla_flavour.short_name] = vanilla_flavour;
 	flavours_arr = [vanilla_flavour];
 	purchased_flavours = [vanilla_flavour];
 	for i in range(1, FLAVOURS_INFO.size()):
-		var f : Flavour = Flavour.new(i, FLAVOURS_INFO[i]);
+		var f : Flavour = Flavour.new(i + 1, FLAVOURS_INFO[i]);
 		flavours_dict[f.short_name] = f;
 		flavours_arr.append(f);
 	flavours_arr.make_read_only();
@@ -95,6 +95,9 @@ func _ready():
 
 
 func load_savedata():
+	savedata.ic_in_bank = 1e2;
+	savedata.flavours.append('pistachio');
+	savedata.businesses['parlor'] = 7;
 	if savedata == null:
 		return;
 	reset_multipliers();

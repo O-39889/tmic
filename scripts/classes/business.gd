@@ -30,7 +30,8 @@ func _init(id: int, entry: Dictionary):
 	self.count = 0;
 	
 	for i in range(entry['upgrades'].size()):
-		self.upgrades.append(Upgrade.new(i, entry['upgrades'][i], self));
+		# IDs start with 1 instead of 0 !
+		self.upgrades.append(Upgrade.new(i + 1, entry['upgrades'][i], self));
 
 
 func base_produce(delta: float) -> float: 
