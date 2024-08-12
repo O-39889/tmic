@@ -7,7 +7,7 @@
 		"price": 100,
 	},
 	{
-		"short_name": "refrigerants",
+		"short_name": "refrigerants_1",
 		"full_name": "Better refrigerants",
 		"effect": "Clicking production is **doubled**.",
 		"description": "Lower toxicity can lead to fewer workplace accidents.\nCome to think of it, this applies not only to chemical compounds…",

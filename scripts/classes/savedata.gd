@@ -42,8 +42,9 @@ class_name SaveData extends Resource;
 ## All flavours purchaed by the player. Elements are string IDs of the flavours.
 ## Vanilla/default flavour doesn't count but whatever.
 @export var flavours : Array = ['vanilla'];
-## All techs purchased by the player. Doesn't reflect the tech tree order or care
-## about the descendant-successor relationships in any way.
+## All techs purchased by the player. Elements are string IDs of the techs.
+## Doesn't reflect the tech tree order or care about the ancestor-descedant
+## relationships in any way.
 @export var techs : Array = [];
 ## The event data.
 @export var val : bool = false;
@@ -60,6 +61,7 @@ static func from_dict(dict: Dictionary) -> SaveData:
 		save.version = dict['version'];
 	else:
 		printerr('No savedata version detected!');
+		
 	if dict.has('player_name'):
 		save.player_name = dict['player_name'];
 	if dict.has('game_started'):
@@ -106,6 +108,8 @@ func to_dict() -> Dictionary:
 		game_started = self.game_started,
 		current_run_started = self.current_run_started,
 		last_saved = self.last_saved,
+		# only used for convenience and doesn't matter when deserializing
+		last_saved_str = Time.get_datetime_string_from_unix_time(self.last_saved),
 		amount_of_resets = self.amount_of_resets,
 		ic_in_bank = self.ic_in_bank,
 		ic_this_run = self.ic_this_run,

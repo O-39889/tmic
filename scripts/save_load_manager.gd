@@ -16,16 +16,8 @@ func _ready():
 	# meanwhile, might find the save file and give it to Game to use
 	# during its _ready
 	print('SaveLoadManager autoload loaded');
-	for i in 10000:
-		print('LIES');
-		break;
-	# THIS IS BS FFS SJDFFKLASJDKLFJASDFLKASDJKFSDKJ
-	# WHY
-	# I SWEAR THIS WAS WORKING
-	#Game.savedata = load_game();
-	## ***DISGUSTING*** workaround
-	var game = get_parent().get_children().filter(func(n): return n.name == 'Game')[0];
-	game.savedata = load_game();
+	if not DirAccess.dir_exists_absolute(DEFAULT_AUTOSAVE_DIR):
+		DirAccess.make_dir_recursive_absolute(DEFAULT_AUTOSAVE_DIR);
 
 
 func save_game(to: String):
@@ -51,3 +43,7 @@ func load_game(dir: String = DEFAULT_AUTOSAVE_DIR,
 		return save;
 	print('Invalid JSON data somehow, returning default savedata');
 	return SaveData.default();
+
+
+func load_autosave():
+	return load_game(DEFAULT_AUTOSAVE_DIR, DEFAULT_AUTOSAVE_FILENAME);

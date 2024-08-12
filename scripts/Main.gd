@@ -132,40 +132,20 @@ func handle_click(amount: float):
 
 
 func _on_business_purchased(business: Business, amount: int):
+	Game.purchase_business(business, amount);
 	var b_node : PanelContainer = business_nodes[business.short_name];
-	business.count += amount;
-	var current_price : float = business.price;
-	b_node.business.price = floorf(business.initial_price * pow(business.multiplier, b_node.business.count));
+	# TODO: also remove and just make it respond to the business purchased signal
 	b_node.update();
-	var game_b; # ???
-	Game.counter -= current_price;
 
 
 func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
-	var id : String = upgrade["short_name"];
-	Game.purchase_upgrade(upgrade);
-	# how about we just move all that out of the way into the Game script
-	if id.begins_with('cooler_bag'):
-		match id:
-			_:
-				Game.multipliers["businesses"]["cooler_bag"] *= 2.0;
-	elif id.begins_with('cart'):
-		match id:
-			_:
-				Game.multipliers['businesses']['cart'] *= 2.0;
-	elif id.begins_with('van'):
-		match id:
-			_:
-				Game.multipliers['businesses']['van'] *= 2.0;
-	elif id.begins_with('parlor'):
-		match id:
-			_:
-				Game.multipliers['businesses']['van'] *= 2.0;
+	if Game.counter >= upgrade.price:
+		Game.purchase_upgrade(upgrade);
 
 
 func _on_flavour_purchased(f: Flavour):
-	print(f.full_name);
-	Game.purchase_flavour(f);
+	if Game.counter >= f.price:
+		Game.purchase_flavour(f);
 
 
 func _on_clickmed(amount: float):
@@ -201,8 +181,13 @@ func _input(event: InputEvent):
 		if current_view != View.MAIN:
 			current_view = View.MAIN;
 	if event.is_action_pressed('f_1'):
-		if current_view == View.MAIN:
-			current_view = View.FLAVOURS;
+		if current_view != View.MAIN:
+			current_view = View.MAIN;
 	if event.is_action_pressed('f_2'):
-		if current_view == View.MAIN:
+		if current_view != View.FLAVOURS:
+			current_view = View.FLAVOURS;
+	if event.is_action_pressed('f_3'):
+		if current_view != View.TECHS:
 			current_view = View.TECHS;
+	if event.is_action_pressed('save_trigger'):
+		print('Saving!');
