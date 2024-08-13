@@ -28,7 +28,9 @@ var purchased_flavours : Array[Flavour] = [];
 ## Read-only dictionary of read-only arrays.
 ## Keys: short string IDs of businesses.
 ## Values: arrays of Upgrade objects corresponding to each business.
-var upgrades := {};		# READ-ONLY
+var upgrades_dict := {};				# READ-ONLY
+## Read-only array of upgrades, sorted first by business ID, then by upgrade ID.
+var upgrades_arr : Array[Upgrade] = []; # READ-ONLY
 var purchased_upgrades : Array[Upgrade] = [];
 
 ## Read-only array and dictionary of techs available in the game.
@@ -47,7 +49,6 @@ func _ready():
 		print('Savedata loaded');
 	else:
 		print('No savedata loaded');
-	# at around 40k or so maybe could put the next business but that's without any flavours and upgrades
 	print("Game autoload loaded");
 	# initializing businesses and upgrades
 	for i in range(BUSINESSES_INFO.size()):
@@ -58,12 +59,14 @@ func _ready():
 		var b := Business.new(i + 1, BUSINESSES_INFO[i]);
 		bs_arr.append(b);
 		bs_dict[b.short_name] = b;
-		upgrades[b.short_name] = b.upgrades.duplicate();
+		upgrades_dict[b.short_name] = b.upgrades;
+		upgrades_arr.append_array(b.upgrades);
 	bs_arr.make_read_only();
 	bs_dict.make_read_only();
-	for b_key in upgrades.keys():
-		upgrades[b_key].make_read_only();
-	upgrades.make_read_only();
+	for b_key in upgrades_dict.keys():
+		upgrades_dict[b_key].make_read_only();
+	upgrades_dict.make_read_only();
+	upgrades_arr.make_read_only();
 	
 	# initializing flavours
 	var vanilla_entry : Dictionary = FLAVOURS_INFO[0];
@@ -98,6 +101,10 @@ func load_savedata():
 	if savedata == null:
 		return;
 	reset_multipliers();
+	if savedata.current_run_started > Time.get_unix_time_from_system()\
+	or savedata.game_started > Time.get_unix_time_from_system()\
+	or savedata.last_saved > Time.get_unix_time_from_system():
+		print('Time travelling detected');
 	counter = savedata.ic_in_bank;
 	counter_all_time = savedata.ic_all_time;
 	clicks = savedata.clicks;
@@ -111,22 +118,20 @@ func load_savedata():
 			set_business(b, savedata.businesses[b.short_name]);
 		else:
 			set_business(b, 0);
+
+	# then, the business upgrades
+	# first, reset them as well
+	reset_upgrades();
+	for u : Upgrade in upgrades_arr:
+		if savedata.upgrades.has(u.short_name):
+			apply_upgrade(u);
 	
 	# then, the flavours
 	# first, reset them
 	reset_flavours();
 	for f : Flavour in flavours_arr:
 		if savedata.flavours.has(f.short_name):
-			apply_flavour(f);
-	
-	# then, the business upgrades
-	# first, reset them as well
-	reset_upgrades();
-	for b_key in upgrades:
-		for u : Upgrade in upgrades[b_key]:
-			if savedata.upgrades.has(b_key)\
-			and savedata.upgrades[b_key].has(u.short_name):
-				apply_upgrade(u);
+			apply_flavour(f);	
 	
 	# finally, the techs
 	# first, reset them
@@ -155,17 +160,16 @@ func save_savedata():
 	save.clicks_all_time = clicks_all_time;
 	
 	for b : Business in bs_arr:
-		if b.count != 0 or true:
-			save.businesses[b.short_name] = b.count;
+		save.businesses[b.short_name] = b.count;
 	
-	# upgrades are a PITA
+	save.upgrades = purchased_upgrades.map(func(u: Upgrade): return u.short_name);
 	
-	for f : Flavour in purchased_flavours:
-		if f.short_name != 'vanilla':
-			save.flavours.append(f.short_name);
+	save.flavours = purchased_flavours.map(func(f: Flavour): return f.short_name);
 	
-	for t : Tech in purchased_techs:
-		save.techs.append(t.short_name);
+	save.techs = purchased_techs.map(func(t: Tech): return t.short_name);
+	
+	print(save.to_dict());
+	return;
 	
 	SaveLoadManager.save_game(save);
 	savedata = save;
@@ -173,6 +177,17 @@ func save_savedata():
 
 func get_click_production():
 	return 6e9 * multipliers['click'];
+
+
+#region Resetting Purchasables
+func reset_multipliers():
+	multipliers = {
+		'flavours': 1.0,
+		'click': 1.0,
+		'businesses': {}
+	};
+	for b : Business in bs_arr:
+		multipliers['businesses'][b.short_name] = 1.0;
 
 
 func reset_flavours():
@@ -189,18 +204,10 @@ func reset_upgrades():
 
 func reset_techs():
 	purchased_techs.clear();
+#endregion
 
 
-func reset_multipliers():
-	multipliers = {
-		'flavours': 1.0,
-		'click': 1.0,
-		'businesses': {}
-	};
-	for b : Business in bs_arr:
-		multipliers['businesses'][b.short_name] = 1.0;
-
-
+#region Purchasing
 func purchase_business(b: Business, amount: int = 1):
 	if amount != 1:
 		printerr('Warning: logic for buying multiple instances of a business not set, subtracting only the price of the first business...');
@@ -224,8 +231,10 @@ func purchase_tech(t: Tech):
 	assert(not t.purchased, 'This tech ' + t.short_name + ' is already purchased');
 	counter -= t.price;
 	apply_tech(t);
+#endregion
 
 
+#region Applying Purchasables
 func set_business(b: Business, amount: int):
 	b.count = amount;
 	b.price = floorf(b.initial_price * pow(b.multiplier, b.count));
@@ -237,11 +246,7 @@ func apply_flavour(f: Flavour):
 	if f.purchased:
 		return;
 	f.purchased = true;
-	# ???
-	purchased_flavours.insert(purchased_flavours.bsearch_custom(
-		f, func(arr_item: Flavour, needle: Flavour): return arr_item.id < needle.id,
-		false
-	), f);
+	_add(f, purchased_flavours);
 	multipliers['flavours'] *= 1.0 + f.bonus;
 
 
@@ -280,7 +285,16 @@ func apply_upgrade(u: Upgrade):
 func apply_tech(t: Tech):
 	if t.purchased:
 		return;
-	purchased_techs.append(t);
+	_add(t, purchased_techs);
 	# and also apply its effect as well
 	if t.short_name in ['ext_whisk', 'refrigerants_1', 'auto_whisk']:
 		multipliers['click'] *= 2.0;
+#endregion
+
+
+## Adds an object to an array while keeping the array sorted by the "id" property
+## of the objects.
+func _add(item: Object, arr: Array):
+	assert(item.get('id') != null, 'Object to insert has no property "id"');
+	arr.append(item);
+	arr.sort_custom(func(a, b): return a.id < b.id);

@@ -1,8 +1,11 @@
 class_name SaveData extends Resource;
 
 
+## VERSION CHANGES
+## 2: made a linear storage for upgrades instead (they're guaranteed to have different
+## string IDs anyway bc of belonging to different businesses)
 ## The version of the save file, updated when there are updates to the save system.
-@export var version : int = 1;
+@export var version : int = 2;
 ## The player's name.
 @export var player_name : String = 'Player';
 ## The time (as a UNIX timestamp) when the savefile started.
@@ -35,10 +38,9 @@ class_name SaveData extends Resource;
 ## and the value is the amount of businesses of that type. Can be omitted if
 ## there's no businesses of that type purchased.
 @export var businesses : Dictionary = {};
-## All upgrades purchased by the player. The keys are the string IDs of the
-## corresponding businesses; each value in the dictionary is an array of string
-## IDs of upgrades for a respective business.
-@export var upgrades : Dictionary = {};
+## All upgrades purchased by the player. Elements are string IDs of the upgrades.
+## The corresponding business type is inferred during Game initialization anyway.
+@export var upgrades : Array = [];
 ## All flavours purchaed by the player. Elements are string IDs of the flavours.
 ## Vanilla/default flavour doesn't count but whatever.
 @export var flavours : Array = ['vanilla'];
@@ -87,7 +89,7 @@ static func from_dict(dict: Dictionary) -> SaveData:
 	if dict.has('businesses'):
 		save.businesses = dict['businesses'].duplicate();
 	if dict.has('upgrades'):
-		save.upgrades = dict['upgrades'].duplicate(true);
+		save.upgrades = dict['upgrades'].duplicate();
 	if dict.has('flavours'):
 		save.flavours = dict['flavours'].duplicate();
 	if dict.has('techs'):
@@ -95,7 +97,7 @@ static func from_dict(dict: Dictionary) -> SaveData:
 	return save;
 
 
-static func to_new_version(old: SaveData) -> SaveData:
+static func convert_version(old: SaveData) -> SaveData:
 	match old.version:
 		_:
 			return old.duplicate();
@@ -119,7 +121,7 @@ func to_dict() -> Dictionary:
 		clicks = self.clicks,
 		clicks_all_time = self.clicks_all_time,
 		businesses = self.businesses.duplicate(),
-		upgrades = self.upgrades.duplicate(true),
+		upgrades = self.upgrades.duplicate(),
 		flavours = self.flavours.duplicate(),
 		techs = self.techs.duplicate(),
 	};

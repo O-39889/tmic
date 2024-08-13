@@ -7,14 +7,7 @@ const DEFAULT_AUTOSAVE_FILENAME = 'autosave.' + DEFAULT_SAVE_EXTENSION;
 const DEFAULT_AUTOSAVE_PATH = DEFAULT_AUTOSAVE_DIR + '/' + DEFAULT_AUTOSAVE_FILENAME;
 
 
-func _enter_tree():
-	print('SaveLoadManager entering tree: ', get_parent().get_children());
-
-
 func _ready():
-	# at this point Game isn't loaded yet
-	# meanwhile, might find the save file and give it to Game to use
-	# during its _ready
 	print('SaveLoadManager autoload loaded');
 	if not DirAccess.dir_exists_absolute(DEFAULT_AUTOSAVE_DIR):
 		DirAccess.make_dir_recursive_absolute(DEFAULT_AUTOSAVE_DIR);
