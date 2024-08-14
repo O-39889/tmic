@@ -78,6 +78,9 @@ func _ready():
 	EventBus.business_purchased.connect(_on_business_purchased);
 	EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
 	EventBus.flavour_purchased.connect(_on_flavour_purchased);
+	# oh wait i see
+	# so it actually only handles purchasing stuff through Main for some reason
+	EventBus.tech_purchased.connect(_on_tech_purchased);
 	
 	EventBus.update_slow.connect(_on_update_slow);
 	
@@ -146,6 +149,11 @@ func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
 func _on_flavour_purchased(f: Flavour):
 	if Game.counter >= f.price:
 		Game.purchase_flavour(f);
+
+
+func _on_tech_purchased(t: Tech):
+	if Game.counter >= t.price:
+		Game.purchase_tech(t);
 
 
 func _on_clickmed(amount: float):

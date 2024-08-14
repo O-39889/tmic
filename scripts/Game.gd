@@ -176,7 +176,7 @@ func save_savedata():
 
 
 func get_click_production():
-	return 6e2 * multipliers['click'];
+	return 50 * multipliers['click'];
 
 
 #region Resetting Purchasables

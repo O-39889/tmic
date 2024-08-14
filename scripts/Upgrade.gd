@@ -1,7 +1,4 @@
-extends Button
-
-
-signal upgrade_purchased(business, upgrade);
+class_name UpgradeNode extends Button;
 
 
 enum UpgradeState {
@@ -67,7 +64,6 @@ func get_state() -> UpgradeState:
 func _on_pressed():
 	if Game.counter >= upgrade.price and not upgrade.purchased:
 		EventBus.upgrade_purchased.emit(self.business, self.upgrade);
-		#upgrade_purchased.emit(business, upgrade);
 
 
 # when is it called?
@@ -94,4 +90,7 @@ func _make_custom_tooltip(for_text):
 
 
 func _on_framerule_update():
-	_update_tooltip();
+	# this method is to process_mode like is_visible_in_tree() is to visible:
+	# it's basically apparently the "evaluated" process mode of the node
+	if can_process():
+		_update_tooltip();

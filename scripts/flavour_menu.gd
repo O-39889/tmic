@@ -44,13 +44,15 @@ func force_update():
 
 
 func _update_flavour_list():
-	for f in Game.flavours_arr:
-		if f not in unlocked_flavours and Game.counter_all_time >= f.unlocked_at:
-			add_flavour(f);
-	$VBoxContainer/Label.text = 'Total multiplier: x' + Globals.format_num(
-		Game.multipliers['flavours'], 3
-	);
+	if can_process():
+		for f in Game.flavours_arr:
+			if f not in unlocked_flavours and Game.counter_all_time >= f.unlocked_at:
+				add_flavour(f);
+		$VBoxContainer/Label.text = 'Total multiplier: x' + Globals.format_num(
+			Game.multipliers['flavours'], 3
+		);
 
 
 func _update_counter():
-	bank_counter.text = 'You have: ' + Globals.format_num(Game.counter);
+	if can_process():
+		bank_counter.text = 'You have: ' + Globals.format_num(Game.counter);

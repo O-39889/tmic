@@ -105,7 +105,7 @@ func _draw():
 
 func _on_pressed():
 	if state == NodeState.UNLOCKED and not disabled:
-		Game.purchase_tech(tech);
+		EventBus.tech_purchased.emit(tech);
 		state = NodeState.PURCHASED;
 		update();
 		for d in descendants:

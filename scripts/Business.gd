@@ -1,7 +1,5 @@
 extends Control
 
-signal business_purchased(short_name, amount)
-
 
 enum BusinessState {
 	# all business after a locked one
@@ -89,7 +87,6 @@ func get_state() -> BusinessState:
 func _on_buy_button_pressed():
 	if business.price <= Game.counter:
 		EventBus.business_purchased.emit(self.business, 1);
-		#emit_signal("business_purchased", business.short_name, 1);
 
 
 func _process(delta):

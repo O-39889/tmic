@@ -16,7 +16,7 @@ const CLICK_LABEL_PACKED := preload("res://scenes/FloatingLabel.tscn");
 @onready var bank_counter : Label = %BankCounter;
 @onready var ips_counter : Label = %IpsCounter;
 
-@onready var prestige_counter : Label = %PrestigeCounter;
+@onready var prestige_counter : Label = %PrestigeCounterMaybe;
 
 @onready var clickme : Clickme = %ClickMe;
 
@@ -58,15 +58,19 @@ func _ready():
 
 
 func update_bank():
-	bank_counter.text = Globals.format_num(Game.counter);
+	if can_process():
+		bank_counter.text = Globals.format_num(Game.counter);
 
 
 func update_ips():
-	ips_counter.text = 'per second: ' + Globals.format_num(Game.ips, 2);
+	if can_process():
+		ips_counter.text = 'per second: ' + Globals.format_num(Game.ips, 2);
 
 
 func update_prestige():
-	pass
+	if can_process():
+		var prestige := floorf(pow(Game.counter / 100000000, 1.0 / 3.0));
+		prestige_counter.text = 'Prestige: ' + Globals.format_num(prestige);
 
 
 func hide_menu():

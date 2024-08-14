@@ -17,6 +17,8 @@ func _ready():
 	var nodes_arr := content.get_children().filter(func(n): return n is TechNode);
 	nodes_arr.sort_custom(func(t1: TechNode, t2: TechNode): return t1.tech.id < t2.tech.id);
 	nodes.assign(nodes_arr);
+	EventBus.update_framerule.connect(update_bank_counter);
+	EventBus.tech_purchased.connect(update_bank_counter);
 	# at this point the first pass is already done
 	# now...
 	# pass  2: set the purchased ones
@@ -59,6 +61,11 @@ func move(offset: Vector2):
 		content.position = new_pos;
 
 
+func update_bank_counter():
+	if can_process():
+		%Counter.text = 'You have: ' + Globals.format_num(Game.counter);
+
+
 func hide_menu():
 	parallax_background.visible = false;
 	self.visible = false;
@@ -72,6 +79,7 @@ func show_menu():
 	process_mode = Node.PROCESS_MODE_INHERIT;
 	for n : TechNode in nodes:
 		n.update();
+	update_bank_counter();
 
 
 func _on_visibility_changed():

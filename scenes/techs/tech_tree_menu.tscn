@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6e5qq5r26ot6"]
+[gd_scene load_steps=5 format=3 uid="uid://c6e5qq5r26ot6"]
 
 [ext_resource type="Script" path="res://scripts/tech_tree_menu.gd" id="1_g1437"]
 [ext_resource type="Texture2D" uid="uid://do8vafyicgew5" path="res://svgs/Microscheme.png" id="2_mxqvm"]
 [ext_resource type="PackedScene" uid="uid://bdpd8akb5v1m7" path="res://scenes/techs/tech_node.tscn" id="3_nakis"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7f5hm"]
+font_size = 32
 
 [node name="TechTreeMenu" type="Control"]
 layout_mode = 3
@@ -79,6 +82,29 @@ offset_top = 647.0
 offset_right = 234.0
 offset_bottom = 697.0
 tech_id = &"auto_whisk"
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(200, 30)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = 60.0
+offset_right = -10.0
+grow_horizontal = 0
+
+[node name="Counter" type="Label" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You have: 0"
+label_settings = SubResource("LabelSettings_7f5hm")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Exit" type="Button" parent="."]
 unique_name_in_owner = true
