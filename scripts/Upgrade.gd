@@ -21,6 +21,8 @@ var state : UpgradeState:
 		self.visible = self.state != UpgradeState.HIDDEN;
 		self.disabled = (self.state != UpgradeState.UNLOCKED_AFFORDABLE
 			and self.state != UpgradeState.PURCHASED);
+		if value == UpgradeState.PURCHASED:
+			modulate = Color.AQUA
 
 var previous : Button = null;
 
@@ -40,7 +42,7 @@ func update():
 
 
 func get_state() -> UpgradeState:
-	if upgrade["purchased"]:
+	if upgrade.purchased:
 		return UpgradeState.PURCHASED;
 	if previous == null:
 		# first one is never hidden (of course when there's at least
