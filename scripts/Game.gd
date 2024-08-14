@@ -176,7 +176,7 @@ func save_savedata():
 
 
 func get_click_production():
-	return 6e9 * multipliers['click'];
+	return 6e2 * multipliers['click'];
 
 
 #region Resetting Purchasables
@@ -285,6 +285,7 @@ func apply_upgrade(u: Upgrade):
 func apply_tech(t: Tech):
 	if t.purchased:
 		return;
+	t.purchased = true;
 	_add(t, purchased_techs);
 	# and also apply its effect as well
 	if t.short_name in ['ext_whisk', 'refrigerants_1', 'auto_whisk']:

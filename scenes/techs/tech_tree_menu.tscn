@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6e5qq5r26ot6"]
+[gd_scene load_steps=4 format=3 uid="uid://c6e5qq5r26ot6"]
 
 [ext_resource type="Script" path="res://scripts/tech_tree_menu.gd" id="1_g1437"]
 [ext_resource type="Texture2D" uid="uid://do8vafyicgew5" path="res://svgs/Microscheme.png" id="2_mxqvm"]
+[ext_resource type="PackedScene" uid="uid://bdpd8akb5v1m7" path="res://scenes/techs/tech_node.tscn" id="3_nakis"]
 
 [node name="TechTreeMenu" type="Control"]
 layout_mode = 3
@@ -18,9 +19,11 @@ unique_name_in_owner = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 unique_name_in_owner = true
 motion_mirroring = Vector2(512, 512)
+metadata/_edit_lock_ = true
 
 [node name="BG" type="Node2D" parent="ParallaxBackground/ParallaxLayer"]
 modulate = Color(0.435294, 0.513726, 0.631373, 0.839216)
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer/BG"]
 texture = ExtResource("2_mxqvm")
@@ -51,6 +54,32 @@ position = Vector2(2048, 1024)
 texture = ExtResource("2_mxqvm")
 centered = false
 
+[node name="Content" type="Node2D" parent="."]
+unique_name_in_owner = true
+metadata/_edit_lock_ = true
+
+[node name="TechNode" parent="Content" node_paths=PackedStringArray("descendants") instance=ExtResource("3_nakis")]
+offset_left = 108.0
+offset_top = 649.0
+offset_right = 158.0
+offset_bottom = 699.0
+tech_id = &"ext_whisk"
+descendants = [NodePath("../TechNode2"), NodePath("../TechNode3")]
+
+[node name="TechNode2" parent="Content" instance=ExtResource("3_nakis")]
+offset_left = 116.0
+offset_top = 580.0
+offset_right = 166.0
+offset_bottom = 630.0
+tech_id = &"refrigerants_1"
+
+[node name="TechNode3" parent="Content" instance=ExtResource("3_nakis")]
+offset_left = 184.0
+offset_top = 647.0
+offset_right = 234.0
+offset_bottom = 697.0
+tech_id = &"auto_whisk"
+
 [node name="Exit" type="Button" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(42, 42)
@@ -62,13 +91,16 @@ offset_top = 10.0
 offset_right = -10.0
 grow_horizontal = 0
 text = "X"
+metadata/_edit_lock_ = true
 
-[node name="ReferenceRect" type="ReferenceRect" parent="."]
+[node name="Bounds" type="ReferenceRect" parent="."]
 layout_mode = 0
 offset_left = -8.0
 offset_top = -8.0
 offset_right = 3064.0
 offset_bottom = 2040.0
+mouse_filter = 2
 border_width = 5.0
+metadata/_edit_lock_ = true
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

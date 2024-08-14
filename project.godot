@@ -32,6 +32,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/markdownlabel/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 mouse_left={
