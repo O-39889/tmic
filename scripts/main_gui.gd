@@ -1,6 +1,7 @@
 class_name MainGui extends VBoxContainer;
 
 
+const BUSINESS_NODE_PACKED := preload("res://scenes/Business.tscn");
 const CLICK_LABEL_PACKED := preload("res://scenes/FloatingLabel.tscn");
 
 
@@ -38,6 +39,14 @@ func _ready():
 	EventBus.update_fastest.connect(update_bank);
 	EventBus.update_fastest.connect(update_ips);
 	EventBus.update_slow.connect(update_prestige);
+	
+	var previous_business : BusinessNode = null;
+	for b : Business in Game.bs_arr:
+		var b_node : BusinessNode = BUSINESS_NODE_PACKED.instantiate() as BusinessNode;
+		b_node.previous = previous_business;
+		previous_business = b_node;
+		b_node.business = b;
+		business_list.add_child(b_node);
 	
 	%SaveBtnTest.pressed.connect(func():
 		Game.save_savedata();
@@ -81,6 +90,9 @@ func hide_menu():
 func show_menu():
 	visible = true;
 	process_mode = Node.PROCESS_MODE_INHERIT;
+	update_bank();
+	update_ips();
+	update_prestige();
 
 
 func _process(delta: float):

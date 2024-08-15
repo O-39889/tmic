@@ -1,4 +1,4 @@
-extends Control
+class_name BusinessNode extends Control;
 
 
 enum BusinessState {
@@ -87,6 +87,7 @@ func get_state() -> BusinessState:
 func _on_buy_button_pressed():
 	if business.price <= Game.counter:
 		EventBus.business_purchased.emit(self.business, 1);
+		update();
 
 
 func _process(delta):

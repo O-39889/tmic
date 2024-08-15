@@ -176,7 +176,54 @@ func save_savedata():
 
 
 func get_click_production():
-	return 50 * multipliers['click'];
+	var production := 1.0;
+	# isn't exactly required, just an example of a "clicking synergy"
+	for b in bs_arr:
+		production += 0.1 * b.count;
+	
+	production *= multipliers['click'];
+	return floorf(production);
+
+
+func production_tick(delta: float):
+	var ips_tick : float = 0.0;
+	for b in bs_arr:
+		if b.count == 0:
+			continue;
+		var business_ips := b.initial_production;
+		
+		business_ips *= multipliers['flavours'];
+		business_ips *= multipliers['businesses'][b.short_name];
+		
+		b.production = business_ips;
+		
+		var produced := b.production * b.count * delta;
+		b.production_all_time += produced;
+		ips_tick += produced;
+		counter += produced;
+		counter_all_time += produced;
+	ips = ips_tick / delta;
+
+
+#region Getting stuff by numeric IDs
+# (because they start with 1 and not with 0)
+
+func get_business(id: int) -> Business:
+	return bs_arr[id - 1];
+
+
+func get_upgrade(bs_id: int, up_id: int) -> Upgrade:
+	return null; # idk lol
+
+
+func get_flavour(id: int) -> Flavour:
+	return flavours_arr[id - 1];
+
+
+func get_tech(id: int) -> Tech:
+	return techs_arr[id - 1];
+
+#endregion
 
 
 #region Resetting Purchasables

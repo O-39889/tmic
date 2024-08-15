@@ -44,12 +44,11 @@ func _ready():
 	if not Engine.is_editor_hint():
 		assert(Game.techs_dict.has(tech_id), 'No tech with string ID ' + tech_id + ' found for node ' + str(self));
 		tech = Game.techs_dict[tech_id];
-		print();
+		tooltip_text = tech.full_name + '\n' + tech.description;
 		for tn in descendants:
 			tn.ancestors.append(self);
 	size = Vector2(SIZE, SIZE);
 	update();
-	tooltip_text = tech.full_name + '\n' + tech.description;
 
 
 func _process(delta):

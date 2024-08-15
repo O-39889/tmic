@@ -34,8 +34,7 @@ func hide_menu():
 func show_menu():
 	visible = true;
 	process_mode = Node.PROCESS_MODE_INHERIT;
-	_update_flavour_list();
-	_update_counter();
+	force_update();
 
 
 func force_update():

@@ -57,8 +57,6 @@ var current_view: View = View.MAIN:
 @onready var bs_arr := Game.bs_arr;
 @onready var bs_dict := Game.bs_dict;
 
-var business_nodes: Dictionary;
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -68,13 +66,7 @@ func _ready():
 	get_window().min_size = Vector2i(1024, 768);
 	# no!! should actually only add the unlocked ones
 	var previous : Control = null;
-	for b in bs_arr:
-		var b_node := BUSINESS_PACKED.instantiate();
-		b_node.previous = previous;
-		b_node.business = b;
-		businesses_list.add_child(b_node);
-		business_nodes[b.short_name] = b_node;
-		previous = b_node;
+	
 	EventBus.business_purchased.connect(_on_business_purchased);
 	EventBus.upgrade_purchased.connect(_on_upgrade_purchased);
 	EventBus.flavour_purchased.connect(_on_flavour_purchased);
@@ -86,7 +78,10 @@ func _ready():
 	
 	main.flavours_btn.pressed.connect(func(): current_view = View.FLAVOURS);
 	main.techs_btn.pressed.connect(func(): current_view = View.TECHS);
+	
 	flavour_menu.exit_button.pressed.connect(func(): current_view = View.MAIN);
+	
+	tech_tree_menu.exit_btn.pressed.connect(func(): current_view = View.MAIN);
 
 
 # for updating UI stuff (counters etc)
@@ -107,38 +102,21 @@ func _process(delta):
 
 # for updating game logic stuff (production etc)
 func _physics_process(delta):
-	var ips : float = 0;
-	for b in bs_arr:
-		if b.count > 0:
-			var produced : float = b.initial_production;
-			
-			# and other multipliers as well
-			produced *= Game.multipliers["flavours"];
-			
-			# for example
-			produced *= Game.multipliers["businesses"][b.short_name];
-			
-			b.production = produced;
-			
-			produced = b.base_produce(delta);
-			
-			b.production_all_time += produced;
-			ips += produced;
-			Game.counter_all_time += produced;
-			Game.counter += produced;
-	Game.ips = ips / delta;
+	Game.production_tick(delta);
 
 
 func handle_click(amount: float):
 	Game.counter_all_time += amount;
 	Game.counter += amount;
+	Game.clicks += 1;
+	Game.clicks_all_time += 1;
+	Game.ic_clicked += amount;
+	Game.ic_clicked_all_time += amount;
 
 
 func _on_business_purchased(business: Business, amount: int):
-	Game.purchase_business(business, amount);
-	var b_node : PanelContainer = business_nodes[business.short_name];
-	# TODO: also remove and just make it respond to the business purchased signal
-	b_node.update();
+	if Game.counter >= business.price:
+		Game.purchase_business(business, 1);
 
 
 func _on_upgrade_purchased(business: Business, upgrade: Upgrade):
@@ -163,25 +141,6 @@ func _on_clickmed(amount: float):
 func _on_update_slow():
 	if Game.counter >= 1.0:
 		get_window().title = '[' + Globals.format_num(Game.counter) + ' ice cream] ' + 'TMIC';
-
-
-func _on_flavours_btn_pressed():
-	current_view = View.FLAVOURS;
-	return;
-	# don't ask
-	var screen_size : Vector2 = (func():
-		for c in get_children():
-			if c is CanvasItem:
-				return c.get_viewport_rect().size;).call();
-	var popup : PopupPanel = PopupPanel.new();
-	#popup.transient = true;
-	#popup.exclusive = true;	
-	# popup.visible = true;
-	popup.initial_position = Window.WINDOW_INITIAL_POSITION_CENTER_MAIN_WINDOW_SCREEN;
-	popup.size = screen_size;
-	popup.popup();
-	popup.add_child(load("res://scenes/flavour_menu_test.tscn").instantiate());
-	add_child(popup);
 
 
 func _input(event: InputEvent):

@@ -11,6 +11,7 @@ var multiplier: float;
 var count: int;
 var initial_production: float;
 var production: float;
+# maybe "produced" instead?
 var production_all_time: float;
 var upgrades: Array[Upgrade];
 
