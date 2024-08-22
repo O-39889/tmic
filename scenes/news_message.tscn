@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://vq0hr1e0xw4w"]
+
+[ext_resource type="LabelSettings" uid="uid://5wd1momiqao7" path="res://resources/news_ticker_label_settings.tres" id="1_d54do"]
+[ext_resource type="Script" path="res://scripts/news_message.gd" id="2_38628"]
+
+[node name="NewsMessage" type="Label"]
+label_settings = ExtResource("1_d54do")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("2_38628")

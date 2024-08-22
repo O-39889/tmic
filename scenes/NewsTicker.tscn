@@ -4,5 +4,8 @@
 
 [node name="NewsTicker" type="Panel"]
 custom_minimum_size = Vector2(0, 69)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
 size_flags_vertical = 8
 script = ExtResource("1_ow076")
