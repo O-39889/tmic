@@ -13,6 +13,9 @@ var clicks : int = 0;
 var ic_clicked : float = 0;
 var clicks_all_time : int = 0;
 var ic_clicked_all_time : float = 0;
+# idk should i or not lol
+var idle_produced : float = 0;
+var idle_produced_all_time : float = 0;
 
 var ips : float = 0;
 
