@@ -1,6 +1,9 @@
 class_name SaveData extends Resource;
 
-
+# why the heck does it have only export variables lol xd
+# oh wait these are the ones that get serialized iirc?
+# but iirc i didn't wanna use the default serialization bc it SOOKED lol xd
+# well okay whatever then
 ## VERSION CHANGES
 ## 2: made a linear storage for upgrades instead (they're guaranteed to have different
 ## string IDs anyway bc of belonging to different businesses)
