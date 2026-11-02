@@ -26,7 +26,7 @@
 	{
 		"short_name": "chip",
 		"full_name": "Chocolate chip",
-		"description": "Classic vanilla flavour enhanced with little pieces of chocolate goodness, like some kind of delicious student exchange program.",
+		"description": "Classic vanilla flavour enhanced with little pieces of chocolatey goodness, like some kind of delicious student exchange program.",
 		"price": 10000,
 		"unlocked_at": 4000,
 		"bonus": 0.01,
