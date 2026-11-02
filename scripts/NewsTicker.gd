@@ -20,6 +20,12 @@ func add_label():
 	# then, you just put that string or callable as a news ticker property
 	# (like with the last level in brickout) and then just each time you
 	# pick an element from an array, you remove that element
+	
+	# or maybe just have the numeric indexes of messages idk
+	# there is a possibility that the array of available options gets changed, obviously, but we just could not care
+	
+	# also maybe intead of the callable thing, just use placeholders like %s or %n or whatever.
+	# and then we just hardcode which ones get edited
 	var arr := [];
 	if false:
 		assert(false, "JUST IN CASE THIS IS JUST EXAMPLE CODE NOTHING SHOULD BE EXECUTED IN HERE");
@@ -43,7 +49,7 @@ func add_label():
 							6, 7, 8:
 								str += "summer";
 							9, 10, 11:
-								if randf() < 0.5:
+								if randf() < 0.5: # real freaking funny
 									str += "fall";
 								else:
 									str += "autumn";
@@ -54,7 +60,7 @@ func add_label():
 					# JUAN YOU MADE ME DO A 286 LONG LINE
 					# BECAUSE OF YOUR STUPID INDENTATION ERRORS
 					# AND THIS IS NOT EVEN GONNA BE USED ANYWHERE FFS
-					(func(): return "Random obscured new feature in an ice cream-themed incremental video game tested poorly, " + str(randi_range(1, 179)) + " dead in " + ["Kentucky", "Vermont", "Maine", "Ohio", "Arkansas", "Arizona", "Kursk", "Florida", "New Hampshire"].pick_random()),
+					(func(): return "Random obscured new feature in an ice cream-themed incremental video game tested poorly, " + str(randi_range(1, 179)) + " dead in " + ["Kentucky", "Vermont", "Maine", "Ohio", "Arkansas", "Arizona", "Minsk", "Florida", "New Hampshire"].pick_random()),
 				]);
 			# prolly not gonna work lol
 			# unless i move all potential candidate messages
